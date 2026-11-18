@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="260" viewBox="0 0 720 260" role="img" aria-labelledby="title desc">
+  <title id="title">成事所文字方章 v14 B：暖磚成</title>
+  <desc id="desc">暖紙色背景上的低飽和磚紅圓角方塊，置入白色成字，搭配成事所字標。</desc>
+  <rect width="720" height="260" rx="24" fill="#F8F6F4"/>
+  <rect x="62" y="38" width="184" height="184" rx="48" fill="#B65A4A"/>
+  <text x="154" y="169" text-anchor="middle" fill="#FFFDFC" font-family="Noto Sans TC, PingFang TC, Microsoft JhengHei, sans-serif" font-size="126" font-weight="600">成</text>
+  <text x="306" y="122" fill="#383432" font-family="Noto Sans TC, PingFang TC, Microsoft JhengHei, sans-serif" font-size="58" font-weight="500" letter-spacing="5">成事所</text>
+  <text x="310" y="169" fill="#81756D" font-family="Noto Sans TC, PingFang TC, Microsoft JhengHei, sans-serif" font-size="18" font-weight="400">用程式幫你成事</text>
+  <text x="310" y="211" fill="#B09F98" font-family="Geist Mono, SFMono-Regular, monospace" font-size="13" letter-spacing="2">B / WARM BRICK SINGLE CHARACTER ICON</text>
+</svg>

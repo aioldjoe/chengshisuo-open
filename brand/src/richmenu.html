@@ -1,0 +1,24 @@
+<!doctype html><meta charset="utf-8"><title>richmenu</title>
+<!--
+  圖文選單 2500×1686（issue #18）。手機上顯示寬 375pt，換算 1pt ≈ 6.67px——
+  邊框 7px 就是螢幕上的 1px 細線（「能按的要看得出能按」）。
+  四格順序與文案跟 lib/onboarding.ts 的 RICH_MENU 一致；點擊區是精確的四等分，
+  卡片間的縫也點得到（落在最近那格的 bounds 裡）。
+  磚紅只給第一格：傳錄音是唯一的主動作，其他三格是查詢。
+-->
+<style>
+html,body{margin:0}
+body{width:2500px;height:1686px;background:#F8F6F4;box-sizing:border-box;padding:72px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:48px;font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif}
+.cell{background:#FFFDFC;border:7px solid #E2D9D3;border-radius:44px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px;box-sizing:border-box}
+.cell b{font-size:118px;font-weight:600;letter-spacing:.02em;color:#383432}
+.cell span{font-size:74px;color:#81756D}
+.cell.primary{background:#B65A4A;border-color:#B65A4A}
+.cell.primary b{color:#FFFDFC}
+.cell.primary span{color:#F5DDD7}
+</style>
+<body>
+<div class="cell primary"><b>怎麼傳錄音</b><span>第一次用先看這個</span></div>
+<div class="cell"><b>看範例記錄頁</b><span>記錄頁長什麼樣</span></div>
+<div class="cell"><b>我的額度</b><span>用了多少、剩多少</span></div>
+<div class="cell"><b>方案與價格</b><span>免費與付費差在哪</span></div>
+</body>

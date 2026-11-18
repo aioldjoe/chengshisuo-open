@@ -1,0 +1,17 @@
+node_modules/
+.next/
+.next-build/
+.env*
+!.env.example
+.vercel/
+*.tsbuildinfo
+.DS_Store
+bakeoff/results/
+# 測試集含真實會議內容（音檔與人工 reference）；只有格式說明與範本進版控
+bakeoff/cases/*
+!bakeoff/cases/README.md
+!bakeoff/cases/_example/
+.env.local
+.data/
+.claude/
+.vercel

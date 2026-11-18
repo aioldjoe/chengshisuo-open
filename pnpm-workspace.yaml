@@ -1,0 +1,4 @@
+# pnpm 11 的 build-scripts 審核閘會卡 install——預先放行需要編譯的兩個套件,別刪。
+allowBuilds:
+  esbuild: true
+  sharp: true

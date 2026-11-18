@@ -1,0 +1,13 @@
+{
+  "scenario": "遠場：手機放桌角，離講者 2 公尺以上",
+  "audio": "audio.m4a",
+  "speakers": 4,
+  "audioSeconds": "15:00",
+  "terms": ["一次側變流量", "IPLV", "建築能效", "多聯變頻"],
+  "anchors": [
+    { "at": "01:30", "text": "先講泵浦的部分" },
+    { "at": "07:45", "text": "空調佔了六十趴" }
+  ],
+  "silences": [{ "from": "05:10", "to": "05:40" }],
+  "notes": "iPhone 語音備忘錄，手機放在桌角、冷氣正下方"
+}

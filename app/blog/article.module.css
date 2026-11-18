@@ -1,0 +1,276 @@
+/* 文章與索引共用。色與間距全走 globals.css 的 token——改配色不必碰這裡。 */
+
+.wrap {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 0 var(--space-lg) var(--space-3xl);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-lg) 0;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  text-decoration: none;
+  color: var(--text);
+}
+
+.seal {
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--seal);
+  color: var(--seal-ink);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.wordmark {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.topActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.topLink {
+  color: var(--text-2);
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+.topLink:hover {
+  color: var(--text);
+}
+
+.article {
+  padding-top: var(--space-lg);
+}
+
+.h1 {
+  margin: 0 0 var(--space-sm);
+  font-size: clamp(1.6rem, 4.5vw, 2.25rem);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.meta {
+  margin: 0 0 var(--space-2xl);
+  color: var(--text-2);
+  font-size: 0.875rem;
+}
+
+.h2 {
+  margin: var(--space-2xl) 0 var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border);
+  font-size: 1.3rem;
+  line-height: 1.5;
+}
+
+.h3 {
+  margin: var(--space-xl) 0 var(--space-sm);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* 中文長文的行高比英文需要更鬆；1.9 是讀得下去的下限 */
+.p {
+  margin: 0 0 var(--space-md);
+  line-height: 1.9;
+  color: var(--text);
+}
+
+.ul,
+.ol {
+  margin: 0 0 var(--space-md);
+  padding-left: 1.4em;
+  line-height: 1.9;
+}
+
+.ul li,
+.ol li {
+  margin-bottom: var(--space-xs);
+}
+
+.ul::marker,
+.ol::marker {
+  color: var(--text-3);
+}
+
+.quote {
+  margin: var(--space-lg) 0;
+  padding: var(--space-sm) var(--space-lg);
+  border-left: 3px solid var(--seal);
+  background: var(--surface);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  line-height: 1.9;
+  color: var(--text-2);
+}
+
+.link {
+  color: var(--seal-strong);
+  text-underline-offset: 3px;
+}
+
+/* 表格橫捲留在自己的框裡，頁面本身永遠不橫捲 */
+.tableWrap {
+  overflow-x: auto;
+  margin: 0 0 var(--space-lg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.table th,
+.table td {
+  padding: var(--space-sm) var(--space-md);
+  text-align: left;
+  vertical-align: top;
+  line-height: 1.7;
+}
+
+.table thead th {
+  background: var(--surface);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.table tbody tr + tr td {
+  border-top: 1px solid var(--border);
+}
+
+/* FAQ 用 dl：它本來就是問答的語意標籤，讀屏與抽取都認得 */
+.faq {
+  margin: var(--space-2xl) 0 0;
+  border-top: 1px solid var(--border);
+}
+
+.faqItem {
+  padding: var(--space-lg) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.faqQ {
+  margin: 0 0 var(--space-xs);
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+.faqA {
+  margin: 0;
+  color: var(--text-2);
+  line-height: 1.9;
+}
+
+.cta {
+  margin-top: var(--space-3xl);
+  padding: var(--space-2xl) var(--space-lg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  text-align: center;
+}
+
+.ctaTitle {
+  margin: 0 0 var(--space-xs);
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.ctaSub {
+  margin: 0 0 var(--space-lg);
+  color: var(--text-2);
+  font-size: 0.9375rem;
+}
+
+/* 可按的都有 1px 邊，不靠 hover 才看得出來 */
+.ctaBtn {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-xl);
+  border: 1px solid var(--seal-strong);
+  border-radius: var(--radius);
+  background: var(--seal);
+  color: var(--seal-ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.ctaNote {
+  margin: var(--space-md) 0 0;
+  font-size: 0.875rem;
+}
+
+.ctaGhost {
+  color: var(--text-2);
+  text-decoration: none;
+}
+.ctaGhost:hover {
+  color: var(--text);
+}
+
+.footer {
+  display: flex;
+  gap: var(--space-xs);
+  justify-content: center;
+  margin-top: var(--space-2xl);
+  color: var(--text-3);
+  font-size: 0.875rem;
+}
+
+.footLink {
+  color: var(--text-2);
+  text-decoration: none;
+}
+
+/* 索引 */
+.list {
+  margin: var(--space-xl) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--border);
+}
+
+.listItem {
+  padding: var(--space-lg) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.listLink {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--text);
+  text-decoration: none;
+}
+.listLink:hover {
+  color: var(--seal-strong);
+}
+
+.listDesc {
+  margin: var(--space-xs) 0 var(--space-xs);
+  color: var(--text-2);
+  line-height: 1.8;
+  font-size: 0.9375rem;
+}
+
+.listDate {
+  color: var(--text-3);
+  font-size: 0.8125rem;
+}

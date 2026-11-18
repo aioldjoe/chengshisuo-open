@@ -1,0 +1,1670 @@
+/*
+ * 記錄頁。方向見 .impeccable.md：Vercel Geist 的骨架＋成事所的口音。
+ * 層次先靠排版再靠表面——全頁不包卡片，節奏由字級、留白與 1px 邊界做出來。
+ */
+
+/* 貼底列常駐，內容和存檔提示都要讓出它的高度（含 iPhone 底部 home bar）。 */
+.page {
+  max-width: 44rem;
+  margin: 0 auto;
+  /* 導覽列 2.75rem ＋ 上下 padding 各 --space-xs */
+  --dock-h: 3.75rem;
+  padding: var(--space-2xl) var(--space-lg)
+    calc(var(--space-3xl) + var(--dock-h) + env(safe-area-inset-bottom));
+}
+
+/* 再疊一層播放列：控制項 2.75rem ＋ 分隔線上下的 --space-xs */
+.page.hasPlayer {
+  --dock-h: 7.5rem;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.notice {
+  max-width: 32rem;
+  margin: 0 auto;
+  padding: var(--space-3xl) var(--space-lg);
+}
+
+.noticeText {
+  margin: 0;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+
+/* --- 落款 --- */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-lg);
+}
+
+/* 「所」會蓋章——印記是這份文件的權威來源，全頁只有這裡和頁尾出現磚紅。 */
+.seal {
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  /* 手冊的方章：圓角是邊長的 26%（184 裡的 48）、字佔邊長七成、600 不用黑體。 */
+  border-radius: 26%;
+  background: var(--seal);
+  color: var(--seal-ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  flex: none;
+}
+
+.wordmark {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--text-2);
+}
+
+/* 記錄頁抬頭：LIFF 標題列已有「成事所」，頁內落款縮一號、退到 text-3，重心讓給會議標題。 */
+.brandQuiet {
+  margin-bottom: var(--space-md);
+}
+
+.brandQuiet .seal {
+  width: 1rem;
+  height: 1rem;
+  font-size: 0.6875rem;
+}
+
+.brandQuiet .wordmark {
+  font-size: 0.75rem;
+  color: var(--text-3);
+}
+
+.headerTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.headerTop .brand {
+  margin-bottom: 0;
+}
+
+/* 字級控制：兩顆 A－／A＋，外框可按（原則五），字級偏好存 localStorage 跨場記住。 */
+.textScale {
+  display: flex;
+  flex: none;
+}
+
+.textScaleBtn {
+  position: relative;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-2);
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  cursor: pointer;
+  padding: 0.3rem 0.55rem;
+  transition: color 0.12s ease-out, border-color 0.12s ease-out;
+}
+
+.textScaleBtn:first-child {
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+/* 疊在前一顆的右邊框上，兩顆之間只留一條線，不是雙倍粗 */
+.textScaleBtn:last-child {
+  margin-left: -1px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.textScaleBtn:hover:not(:disabled) {
+  z-index: 1;
+  color: var(--text);
+  border-color: var(--text-2);
+}
+
+.textScaleBtn:disabled {
+  color: var(--text-3);
+  cursor: default;
+  opacity: 0.5;
+}
+
+/* --- 抬頭 --- */
+
+/* 「2026-08-16 / 7 分 32 秒 / 3 位說話人」——讀的是句子，只有日期是識別碼，所以整行走 sans、只把數字用 tabular。 */
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-xs);
+  margin: var(--space-xs) 0 0;
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+}
+
+.metaDot {
+  opacity: 0.5;
+}
+
+.audioGone {
+  margin: var(--space-md) 0 0;
+  font-size: 0.8125rem;
+  color: var(--text-2);
+}
+
+/* 錨點跳過去時，目標區塊別貼著螢幕頂 */
+.section {
+  scroll-margin-top: var(--space-md);
+}
+
+/* --- 貼底列：導覽列常駐，音檔還在時上面疊播放列（兩層的理由見 bottom-bar.tsx） --- */
+
+.bottomBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: var(--space-xs) var(--space-lg) env(safe-area-inset-bottom);
+  z-index: 9;
+}
+
+.playerRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+/* 導覽列：無框文字錨點，不是篩選按鈕；目前區以加重＋底線標示。
+   帶數字：「待辦 4」一眼就知道這場會記到多少東西。
+   不配 icon——「決議」「承諾」沒有公認圖形，畫了得先學一次，中文字本身就是最快的識別。 */
+.bottomNav {
+  display: flex;
+  /* safe：裝不下時退回靠左，不然置中會把第一顆推到捲不到的地方（不支援的瀏覽器整條失效＝靠左，一樣安全） */
+  justify-content: safe center;
+  gap: var(--space-md);
+  max-width: 44rem;
+  margin: 0 auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+  /* 窄螢幕滑出去時右緣不被裁切 */
+  padding-inline: var(--space-lg);
+  margin-inline: calc(var(--space-lg) * -1);
+  /* 橫捲自己吃掉，垂直分量不外漏給 LIFF 的下滑關閉 */
+  touch-action: pan-x;
+}
+
+/* 有播放列時兩層之間畫一條線分身分；只有導覽列時不需要 */
+.playerRow + .bottomNav {
+  margin-top: var(--space-xs);
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--border);
+}
+
+/* 右緣漸隱提示還有得滑——只在真的還有東西可滑時掛上（JS 判斷），不然最後一顆永遠是淡的。 */
+.bottomNavMore {
+  mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent);
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent);
+}
+
+.bottomNav::-webkit-scrollbar {
+  display: none;
+}
+
+/* 觸控目標 44px：navbar 的份量來自高度與字重 */
+.jump {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  min-height: 2.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-2);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: color 0.12s ease-out, border-color 0.12s ease-out;
+}
+
+.jump:hover {
+  color: var(--text);
+}
+
+.jumpActive {
+  color: var(--text);
+  font-weight: 600;
+  border-bottom-color: var(--text);
+}
+
+.jumpCount {
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-3);
+}
+
+.jumpActive .jumpCount {
+  color: var(--text-2);
+}
+
+/* 三顆播放控制一組：±10 秒才是聽會議的主力操作（拉 bar 拉不準），
+   所以跟播放鍵並排放在拇指最順的位置。 */
+.transport {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* 衛星鈕（±10 秒、速度）：文字就是圖示——「−10秒」「1.5×」不必先學，
+   小尺寸下也不會糊成一團（畫過 ⟳10 那種圈，18px 上就是一團）。
+   三顆同高同角同框，一列裡只留一個重音：實心的播放鍵。
+   走 mono＋等寬數字，換速時寬度不抖。 */
+.skipBtn,
+.rateBtn {
+  position: relative;
+  flex: none;
+  height: 2.25rem;
+  padding: 0 0.625rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: border-color 0.12s ease-out, background-color 0.12s ease-out,
+    color 0.12s ease-out;
+}
+
+/* 看得到 36px，按得到 44px——貼底列的鈕不能只有「看起來剛好」 */
+.skipBtn::after,
+.rateBtn::after,
+.playBtn::after {
+  content: "";
+  position: absolute;
+  inset: -0.25rem 0;
+}
+
+.skipBtn:hover,
+.rateBtn:hover {
+  border-color: var(--text-2);
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* 唯一的圓、也是唯一的實心：整頁的重音只給「播放」這一件事。
+   其餘元件維持方角（.impeccable.md 的口音）。 */
+.playBtn {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid var(--text);
+  border-radius: 50%;
+  background: var(--text);
+  color: var(--bg);
+  cursor: pointer;
+  transition: border-color 0.12s ease-out, background-color 0.12s ease-out;
+}
+
+.playBtn:hover {
+  border-color: var(--text-2);
+  background: var(--text-2);
+}
+
+/* 進度線：貼在整條貼底列的上緣（.bottomBar 是 fixed，這裡 absolute 就會對到它），
+   所以不吃 playerRow 的 44rem 欄寬也不佔橫向——窄機上那 90px 全還給控制項。
+   已播的 2px 蓋掉 border-top，未播的部分就是原本那條 border。 */
+.progress {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  pointer-events: none;
+}
+
+.progressFill {
+  display: block;
+  height: 100%;
+  background: var(--text);
+  /* timeupdate 一秒才四發，補一段等速位移才不會一格一格跳 */
+  transition: width 0.25s linear;
+}
+
+/* 時間是操作性識別，走 mono（.impeccable.md 的規矩）。 */
+.dockTime {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35em;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+/* --- 段落 --- */
+
+.section {
+  margin-top: var(--space-2xl);
+}
+
+/* 標題後面一條細線拉到底，右邊放提示——編輯感的分隔，不是彩色左邊條。 */
+.sectionHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2xs) var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+/* 與 .lead（1.0625rem）比 ≈ 1.29：層次靠字級不靠盒子，比例要 ≥ 1.25 才看得出誰是標題。 */
+.sectionTitle {
+  margin: 0;
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  flex: none;
+}
+
+.rule {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.hint {
+  flex: none;
+  font-size: 0.75rem;
+  color: var(--text-2);
+}
+
+/* 區塊標題列上的小動作（目前只有逐字稿的「下載字幕」）——外框可按，跟 .hint 同排。 */
+.sectionAction {
+  flex: none;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-2);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: color 0.12s ease-out, border-color 0.12s ease-out;
+}
+
+.sectionAction:hover {
+  color: var(--text);
+  border-color: var(--text-2);
+}
+
+/* 開著的模式要看得出來，不然關掉的按鈕跟打開的長一樣。 */
+.sectionActionOn {
+  color: var(--text);
+  border-color: var(--text-2);
+  background: var(--surface);
+}
+
+/* 標題列塞不下一句話，就讓它自己佔一整列：flex-basis 100% 會把它推到標題下方，
+   靠左對齊內文。字級語氣比照 .exportHint——同一件事（要換瀏覽器）在兩處講法要一樣。 */
+.sectionActionHint {
+  flex: 0 0 100%;
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* --- 可編輯欄位 ---
+   textarea 隨內容長高：用「同格複製一份隱形文字」的 grid 疊法，不用 JS 量高度。
+   量高度的版本會在 CSS 還沒套上時量到錯的寬度（框變成幾百 px 高），
+   而且字體晚載入、視窗改寬都要重算——這裡讓瀏覽器自己算。 */
+
+.grow {
+  display: grid;
+  line-height: 1.65;
+  margin: -0.25rem -0.4rem;
+}
+
+/* 隱形的那份撐出高度，真正的 textarea 疊在上面。兩者的字型與框線盒必須完全一致。 */
+.grow::after {
+  content: attr(data-value) " ";
+  visibility: hidden;
+}
+
+.grow > .field,
+.grow::after {
+  grid-area: 1 / 1 / 2 / 2;
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 0.25rem 0.4rem;
+}
+
+.field {
+  width: 100%;
+  color: inherit;
+  background: transparent;
+  resize: none;
+  overflow: hidden;
+  transition: border-color 0.12s ease-out, background-color 0.12s ease-out;
+}
+
+.field:hover {
+  border-color: var(--border);
+}
+
+.field:focus {
+  outline: none;
+  border-color: var(--border-strong);
+  background: var(--bg);
+}
+
+.field::placeholder {
+  color: var(--text-3);
+}
+
+.grow.titleField {
+  font-size: clamp(1.75rem, 1.45rem + 1.5vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.grow.small {
+  font-size: 0.8125rem;
+  min-width: 4.5rem;
+}
+
+/* 重點是「品質驚喜」的主戰場（GLOSSARY.md），字級比其他條目大一階撐起份量。 */
+.grow.lead {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+}
+
+/* --- 列表 --- */
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-2xs) 0;
+}
+
+/* 短破折當項目符號——比圓點安靜，跟 Geist 的幾何感也對得上。 */
+.bullet {
+  flex: none;
+  width: 0.5rem;
+  height: 1px;
+  margin-top: 0.85rem;
+  background: var(--border-strong);
+}
+
+/* 承諾是蓋過章的：實心方印，不是破折。 */
+.bulletSeal {
+  flex: none;
+  width: 0.375rem;
+  height: 0.375rem;
+  margin-top: 0.65rem;
+  border-radius: 1px;
+  background: var(--seal);
+}
+
+.rowBody {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 刪除鈕平時淡出，滑到該列、或點進該列文字（focus-within，手機唯一入口）才出現——列表不該滿是叉叉。 */
+.remove {
+  flex: none;
+  background: transparent;
+  color: var(--text-3);
+  cursor: pointer;
+  font-size: 0.875rem;
+  line-height: 1;
+  padding: 0.4rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  opacity: 0;
+  /* 看不見時也不可點——否則右緣是一整條隱形的刪除熱區 */
+  pointer-events: none;
+  transition: opacity 0.12s ease-out, color 0.12s ease-out;
+}
+
+.row:hover .remove,
+.row:focus-within .remove {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.remove:hover {
+  color: var(--danger);
+}
+
+/* 能按的都要看得出能按（2026-08-16）：新增／取消／連結一律 1px 外框，不靠 hover 才知道。 */
+.add {
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-2);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius);
+  margin-top: var(--space-xs);
+  transition: color 0.12s ease-out, border-color 0.12s ease-out;
+}
+
+.add:hover {
+  color: var(--text);
+  border-color: var(--text-2);
+}
+
+.empty {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-2);
+}
+
+/* --- 待辦／承諾的細節列 --- */
+
+.detail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2xs) var(--space-md);
+  margin-top: var(--space-2xs);
+  font-size: 0.8125rem;
+  color: var(--text-2);
+}
+
+.detailItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.detailLabel {
+  flex: none;
+  color: var(--text-3);
+}
+
+.select {
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 0.15rem 0.25rem;
+  transition: border-color 0.12s ease-out;
+}
+
+.select:hover {
+  border-color: var(--border);
+}
+
+/* --- 分享頁（唯讀）：跟 .grow 那套可編輯疊層無關，純文字排版 --- */
+
+.shareTitle {
+  margin: var(--space-xs) 0 0;
+  font-size: clamp(1.75rem, 1.45rem + 1.5vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.shareBadge {
+  display: inline-block;
+  margin-top: var(--space-md);
+  font-size: 0.75rem;
+  color: var(--text-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.25rem 0.6rem;
+}
+
+.staticText {
+  margin: 0;
+  line-height: 1.65;
+}
+
+.staticTextLead {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+}
+
+.staticDetail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2xs) var(--space-md);
+  margin-top: var(--space-2xs);
+  font-size: 0.8125rem;
+  color: var(--text-2);
+}
+
+.speakerStatic {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.subsectionTitleStatic {
+  margin: 0 0 var(--space-2xs);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+/* --- 說話人：內文式，跟其他欄位同一套規矩（平時是一行字，hover 浮邊、focus 才變輸入框） --- */
+
+.speakers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: var(--space-2xs) var(--space-lg);
+}
+
+.speakerRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* 「講者 A」是名字的暫稱，不是識別碼——走 sans 不走 mono。 */
+.speakerLabel {
+  flex: none;
+  min-width: 3.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-2);
+}
+
+.speakerInput {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: inherit;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 0.25rem 0.4rem;
+  margin: 0 -0.4rem;
+  transition: border-color 0.12s ease-out, background-color 0.12s ease-out;
+}
+
+.speakerInput:hover {
+  border-color: var(--border);
+}
+
+.speakerInput:focus {
+  outline: none;
+  border-color: var(--border-strong);
+  background: var(--bg);
+}
+
+.speakerInput::placeholder {
+  color: var(--text-3);
+  font-weight: 400;
+}
+
+/* --- 議題分段 --- */
+
+.subsection {
+  padding: 0 0 var(--space-md);
+}
+
+/* 段與段之間才有分隔線（:first-of-type 會誤中標題列，別用） */
+.subsection + .subsection {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-md);
+}
+
+.grow.subsectionTitle {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  margin-bottom: var(--space-2xs);
+}
+
+/* --- 逐字稿（唯讀）---
+   時間戳走 mono 排成一直行（Vercel 的規矩：mono 只給操作性識別），
+   換人講話時多留一口氣，長逐字稿才有節奏。 */
+
+.turn {
+  display: grid;
+  grid-template-columns: 3.25rem 1fr;
+  gap: var(--space-sm);
+  /* 只寫 block 軸：橫向 padding 歸 .turnActive／:active 管，用 padding 簡寫會在
+     手機的 @media 區塊裡（在後面）把它蓋掉，那一列就只剩負 margin——變寬 16px，
+     整段文字當場重新斷行。 */
+  padding-block: 0.15rem;
+  /* 只要 paint containment（時間戳的擴大熱區得裁在本列裡），不要 content-visibility：
+     沒捲到的列會先用猜的高度佔位，真的畫出來才換成實際行數——一列差幾十 px，
+     一份逐字稿捲下來整頁一路長短，讀的人眼睛跟著上下跳。省下的那點 paint
+     換不了「字停在原地」。 */
+  contain: paint;
+  transition: background-color 0.15s ease-out;
+}
+
+.turnNew {
+  margin-top: var(--space-sm);
+}
+
+.stamp {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-2);
+  padding-top: 0.3rem;
+}
+
+/* 時間戳可跳播。「能按的要看得出能按」在這裡不能靠外框——上千列會變成一牆盒子，
+   所以借連結的做法：底下一條 1px 線。 */
+.stampBtn {
+  composes: stamp;
+  position: relative;
+  /* 不加就會被 grid 拉成整段的高度：底線掉到段尾、時間戳浮在段落中間 */
+  justify-self: start;
+  align-self: start;
+  /* 按鈕不會自己繼承行高，不指定就會比 span 版的時間戳高一點、跟內文對不齊 */
+  line-height: inherit;
+  padding: 0.3rem 0 0;
+  border: none;
+  border-bottom: 1px solid var(--border-strong);
+  background: none;
+  cursor: pointer;
+  transition: color 0.12s ease-out, border-color 0.12s ease-out;
+}
+
+/* 觸控目標拉到 ≥44px，但不撐開行距——用一層看不見的擴大區，只在指標裝置上收窄。 */
+.stampBtn::after {
+  content: "";
+  position: absolute;
+  inset: -0.25rem -0.35rem;
+}
+
+.stampBtn:hover {
+  color: var(--text);
+  border-bottom-color: var(--text-2);
+}
+
+/* 整列都能點就得看得出來。手指落下當下先鋪底色——不等音檔 buffer，
+   回饋才不會慢半拍（全域關掉了 -webkit-tap-highlight-color，得自己給）。 */
+.turnSeekable {
+  cursor: pointer;
+}
+
+/* 播到哪一段就淡淡罩一層；按下去的那一刻也是同一層——同一件事（「這列」）
+   同一個底色，調 tint 只改這裡。單色——磚紅是身分與承諾的顏色，不拿來當游標。 */
+.turnActive,
+.turnSeekable:active {
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  margin-inline: calc(var(--space-xs) * -1);
+  padding-inline: var(--space-xs);
+}
+
+/* 按下就要有，等 0.15s 淡入等於沒有（放開才走 .turn 的淡出） */
+.turnSeekable:active {
+  transition: none;
+}
+
+/* 正在播的那列再按下去（＝重播）得有別的訊號，不然底色本來就已經是 --surface。 */
+.turnActive.turnSeekable:active {
+  background: var(--border);
+}
+
+.turnActive .stamp {
+  color: var(--text);
+}
+
+.turnText {
+  margin: 0;
+  line-height: 1.75;
+}
+
+.turnSpeaker {
+  font-weight: 500;
+  color: var(--text-2);
+  margin-right: var(--space-xs);
+}
+
+/* 點講者名就地改名（issue #23）。可按要看得出來，但這裡不能給外框——
+   逐字稿是唯讀的證據層，一牆盒子會讓整篇看起來都能編。借時間戳那條底線的語彙，
+   改成虛線：實線＝跳播，虛線＝可改字。 */
+.turnSpeakerBtn {
+  position: relative;
+  font: inherit;
+  font-weight: 500;
+  color: var(--text-2);
+  line-height: inherit;
+  margin-right: var(--space-xs);
+  padding: 0;
+  border: none;
+  border-bottom: 1px dashed var(--border-strong);
+  background: none;
+  cursor: pointer;
+  transition: color 0.12s ease-out, border-color 0.12s ease-out;
+}
+
+/* 觸控目標補一點，但不能撐開行距——用一層看不見的擴大區。
+   只往上、往左長：下面與右邊就是同一段的內文，往那邊吃等於把「點段落即播」
+   的手勢搶走，比改名目標小一點嚴重得多。上方吃得到的也有限——.turn 的
+   contain: paint 會把它裁在本列的 padding box 裡（順帶保證偷不到鄰列的點擊）。 */
+.turnSpeakerBtn::after {
+  content: "";
+  position: absolute;
+  inset: -0.4rem 0 0 -0.35rem;
+}
+
+.turnSpeakerBtn:hover {
+  color: var(--text);
+  border-bottom-color: var(--text-2);
+}
+
+/* 改名字中：輸入框坐在講者名原本的位置，提示接在旁邊。
+   提示要有——「修正說話人」的入口就在附近，得講清楚這顆改的是名字不是歸屬。 */
+.turnRename {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 var(--space-xs);
+  margin-right: var(--space-xs);
+}
+
+.turnRenameInput {
+  width: 7rem;
+  font: inherit;
+  font-weight: 500;
+  color: var(--text);
+  line-height: inherit;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 0 0.25rem;
+}
+
+.turnRenameInput:focus {
+  outline: none;
+  border-color: var(--text-2);
+}
+
+.turnRenameInput::placeholder {
+  color: var(--text-3);
+  font-weight: 400;
+}
+
+.turnRenameHint {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--text-2);
+}
+
+/* --- 逐字稿的修正（issue #9）：入口在區 head，本文一個編輯 affordance 都不長 --- */
+
+.fixPanel {
+  margin-bottom: var(--space-md);
+  padding: var(--space-sm) var(--space-md) var(--space-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.fixForm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* 這裡是真的在填表（不是「看起來像內文的可編輯欄位」），所以外框一直在。 */
+.fixInput {
+  flex: 1 1 7rem;
+  min-width: 0;
+  font: inherit;
+  font-size: 0.9375rem;
+  color: inherit;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 0.35rem 0.6rem;
+}
+
+.fixInput:focus {
+  outline: none;
+  border-color: var(--text-2);
+}
+
+.fixInput::placeholder {
+  color: var(--text-3);
+}
+
+.fixArrow {
+  flex: none;
+  color: var(--text-3);
+  font-size: 0.875rem;
+}
+
+/* 命中數自己佔一整列：它會跟著打字跳動，跟輸入框同排會把整排推來推去。 */
+.fixHits {
+  flex: 0 0 100%;
+  margin: var(--space-2xs) 0 0;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.fixList {
+  list-style: none;
+  margin: var(--space-md) 0 0;
+  padding: var(--space-sm) 0 0;
+  border-top: 1px solid var(--border);
+}
+
+.fixRule {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-2xs) 0;
+}
+
+.fixRuleText {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+/* 刪了就還原，所以不做二次確認——但按鈕本身要一直看得見（規則不是滑過才想刪的東西）。 */
+.fixRemove {
+  flex: none;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-2);
+  font: inherit;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: color 0.12s ease-out, border-color 0.12s ease-out;
+}
+
+.fixRemove:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.fixNote {
+  margin: 0 0 var(--space-md);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* 換好的詞閃一下再淡出。<mark> 預設是螢光黃，這裡整個蓋掉走成事磚紅那階。
+   1.4s 要跟 meeting-view.tsx 的 FLASH_MS 同步——動畫收完 <mark> 才會被拿掉。 */
+.hit {
+  background: var(--seal-weak);
+  color: inherit;
+  border-radius: var(--radius-sm);
+  padding: 0 0.1em;
+  animation: hitFade 1.4s ease-out forwards;
+}
+
+@keyframes hitFade {
+  0%,
+  55% {
+    background: var(--seal-weak);
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+/* 修正說話人時取代講者名的選單：接在 .select 後面只改差異——坐在講者名原本的位置、
+   語氣比照講者名。它是一個模式下的臨時控制項，不是逐字稿長出來的編輯入口，
+   所以框線一直在（模式開著時本來就該看得出哪些東西能動）。 */
+.turnSpeakerSelect {
+  color: var(--text-2);
+  background: var(--bg);
+  border-color: var(--border-strong);
+  padding: 0.05rem 0.2rem;
+  margin-right: var(--space-xs);
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hit {
+    animation: none;
+  }
+}
+
+/* --- 載入骨架 --- */
+
+.skel {
+  background: var(--surface);
+  border-radius: var(--radius);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* --- 存檔狀態 --- */
+
+.saveBar {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--space-lg) + var(--dock-h, 0rem) + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: var(--surface);
+  color: var(--text-2);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: var(--space-2xs) var(--space-sm);
+  border-radius: 999px;
+  box-shadow: var(--ring), 0 4px 12px oklch(0 0 0 / 8%);
+  animation: rise 0.16s ease-out;
+  z-index: 10;
+}
+
+.saveBar.failed {
+  color: var(--danger);
+}
+
+.saveDot {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: var(--text-3);
+}
+
+.saveBar.failed .saveDot {
+  background: var(--danger);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 4px);
+  }
+}
+
+/* --- 頁尾：敲門磚 --- */
+
+.footer {
+  margin-top: var(--space-3xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border);
+}
+
+.signoff {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs) var(--space-sm);
+  flex-wrap: wrap;
+  font-size: 0.875rem;
+  color: var(--text-2);
+}
+
+/* 方章跟「成事所」黏在同一個 inline 盒裡，窄螢幕換行時是按鈕掉下去，不是章被孤立在上一行。 */
+.signoffText {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.cta {
+  display: inline-block;
+  color: var(--seal-strong);
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--seal);
+  border-radius: var(--radius);
+  padding: 0.3rem 0.75rem;
+  transition: background 0.12s ease-out;
+}
+
+.cta:hover {
+  background: var(--seal-weak);
+}
+
+/* --- 分享：唯讀連結的產生／複製／撤銷 --- */
+
+.shareZone {
+  margin-top: var(--space-xl);
+}
+
+.shareSectionTitle {
+  margin: 0 0 var(--space-xs);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.shareRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.shareLink {
+  flex: 1;
+  min-width: 12rem;
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-2);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.35rem 0.6rem;
+}
+
+/* 分享區的主要動作。磚紅是稀有色，這裡用外框版不用實色——
+   頁尾的「找我們聊聊」已經是同一種外框磚紅，實心版留給分享頁那顆加好友 CTA，
+   一頁裡不該有兩個實心磚紅互相搶。composes 讓它跟 .cta 不會走鐘。 */
+.shareCta {
+  composes: cta;
+  /* .cta 原本套在 <a> 上，沒宣告 background；<button> 會吃到瀏覽器預設的
+     buttonface（深色模式下是灰色塊）。font 同理。 */
+  background: transparent;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+}
+
+.shareCta:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.shareBtn {
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-2);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: color 0.12s ease-out, border-color 0.12s ease-out;
+}
+
+.shareBtn:hover:not(:disabled) {
+  color: var(--text);
+  border-color: var(--text-2);
+}
+
+.shareBtn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.dangerZone {
+  margin-top: var(--space-xl);
+}
+
+.dangerBtn {
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-2);
+  font: inherit;
+  font-size: 0.75rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: color 0.12s ease-out, border-color 0.12s ease-out;
+}
+
+.dangerBtn:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.confirmRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 0.8125rem;
+}
+
+.confirmText {
+  color: var(--text-2);
+}
+
+.confirmYes {
+  border: none;
+  background: var(--danger);
+  color: var(--bg);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.confirmYes:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.confirmNo {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text-2);
+  font: inherit;
+  font-size: 0.8125rem;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+  transition: color 0.12s ease-out, border-color 0.12s ease-out;
+}
+
+.confirmNo:hover {
+  color: var(--text);
+  border-color: var(--text-2);
+}
+
+/* 觸控裝置沒有 hover——刪除鈕靠 .row:focus-within 出現（點進文字才有），平時乾淨；
+   出現時要夠大好按。 */
+@media (hover: none) {
+  .remove {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    display: grid;
+    place-items: center;
+    padding: 0;
+  }
+
+  .add {
+    padding: 0.75rem 0.5rem 0.75rem 0;
+  }
+
+  .select {
+    padding: 0.4rem 0.3rem;
+  }
+
+  /* 時間戳的可按範圍＝這一列的時間戳欄：擴大區給大一點，.turn 的 contain: paint
+     會把它裁在本列的 padding box 裡，偷不到鄰列的點擊。
+     單行的段落只有 33px 高，列高補到 44px 觸控目標才夠。 */
+  .turn {
+    padding-block: 0.5rem;
+  }
+
+  .stampBtn::after {
+    inset: -1.5rem -0.75rem;
+  }
+
+  /* iOS 對 16px 以下的輸入框會在聚焦時自動放大整頁，小欄位一律撐到 16px。 */
+  .grow.small,
+  .select,
+  .speakerInput,
+  .fixInput,
+  .turnRenameInput,
+  .turnSpeakerSelect {
+    font-size: 1rem;
+  }
+
+  /* 講者名是手機上的主要改名入口，往上再多給一點（下面與右邊仍然不碰內文）。 */
+  .turnSpeakerBtn::after {
+    inset: -0.9rem 0 0 -0.5rem;
+  }
+
+  /* 修正是手機上的主要操作，觸控目標補到 44px。 */
+  .turnSpeakerSelect {
+    padding: 0.4rem 0.3rem;
+  }
+
+  .fixRemove {
+    min-height: 2.75rem;
+    padding-inline: 0.9rem;
+  }
+}
+
+/* --- 載入動線 ---
+   骨架換成內容的那一刻，各區依序浮上來——一次到位的進場，
+   比零碎的小動畫更有「文件送到了」的份量。只動 transform 與 opacity。 */
+
+@media (prefers-reduced-motion: no-preference) {
+  .page > header,
+  .page > section,
+  .page > .joinBlock,
+  .page > footer {
+    animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .page > section:nth-of-type(2) {
+    animation-delay: 0.05s;
+  }
+
+  .page > section:nth-of-type(3) {
+    animation-delay: 0.1s;
+  }
+
+  .page > section:nth-of-type(4) {
+    animation-delay: 0.15s;
+  }
+
+  .page > section:nth-of-type(5) {
+    animation-delay: 0.2s;
+  }
+
+  .page > section:nth-of-type(6) {
+    animation-delay: 0.25s;
+  }
+
+  .page > section:nth-of-type(7) {
+    animation-delay: 0.3s;
+  }
+
+  .page > footer {
+    animation-delay: 0.35s;
+  }
+
+  /* 落款的印是「蓋」上去的：從稍大處落下坐定，全頁唯一一個帶戲的元素。 */
+  .brand .seal {
+    animation: stamp 0.3s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@keyframes stamp {
+  from {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .saveBar,
+  .skel {
+    animation: none;
+  }
+
+  .progressFill {
+    transition: none;
+  }
+
+  .turn,
+  .playBtn,
+  .skipBtn,
+  .rateBtn,
+  .stampBtn,
+  .turnSpeakerBtn,
+  .joinCta {
+    transition: none;
+  }
+}
+
+/* --- 分享頁的轉化口：看記錄的人就是下一個用戶（issue #8）--- */
+
+/* 跟頁尾落款同一區、在它上面一格：是頁面的一部分，不是浮層也不是橫幅——
+   分享頁的價值是「看的人想轉傳」，任何蓋住內容的東西都在拆自己的台。 */
+.joinBlock {
+  margin-top: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.joinLead {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+/* 整頁唯一一顆實色磚紅——這頁的其他按鈕都是外框，稀有才有分量。
+   跟首頁的 home.module.css .cta 是同一顆按鈕，改樣式兩邊都要改。
+   padding 撐到 48px 高：這是分享頁的主要動作，手指按的（.impeccable「手機是主場」）。 */
+.joinCta {
+  display: inline-block;
+  background: var(--seal);
+  color: var(--seal-ink);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 0.8rem 1.25rem;
+  border-radius: var(--radius);
+  transition: opacity 0.12s ease-out;
+}
+
+.joinCta:hover {
+  opacity: 0.9;
+}
+
+/* 觸控沒有 hover，按下去要有回饋 */
+.joinCta:active {
+  opacity: 0.85;
+}
+
+.joinNote {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--text-2);
+}
+
+/* --- 試用頁的兩步 CTA（issue #19）：加好友（磚紅實色）→ 認領（外框） --- */
+
+.trialSteps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+/* 第二步跟主鈕同高但只有外框——磚紅實色仍然只有一顆（同 home 的 .ctaGhost） */
+.trialClaimCta {
+  display: inline-block;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: none;
+  padding: 0.8rem 1.25rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  transition: border-color 0.12s ease-out;
+}
+
+.trialClaimCta:hover {
+  border-color: var(--text-2);
+}
+
+.trialClaimCta:active {
+  opacity: 0.85;
+}
+
+/* --- 匯出：Word 檔與列印／存成 PDF --- */
+
+/* 跟分享同一組動作（都是「讀完了，我要帶走」），所以共用 .shareSectionTitle／.shareBtn 的樣子。 */
+.exportZone {
+  margin-top: var(--space-xl);
+}
+
+.exportHint {
+  margin: var(--space-xs) 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* --- 列印（＝存成 PDF）---
+   這頁本來就是為了印出來傳出去（.impeccable.md：「白天讀、轉傳、之後要出 PDF」）。
+   深色 token 的復原在 globals.css，這裡只管版面：把螢幕上的操作元件收掉、
+   讓可編輯欄位退回內文的樣子、把分頁切在該切的地方。 */
+
+@media print {
+  /* 該印的只有內容。貼底列、編輯鈕、分享與刪除、加好友 CTA 都是螢幕上的東西——
+     紙上的連結按不動，印出來只是雜訊。 */
+  .bottomBar,
+  .saveBar,
+  .textScale,
+  .remove,
+  .add,
+  .sectionAction,
+  .sectionActionHint,
+  .fixPanel,
+  .fixNote,
+  .exportZone,
+  .shareZone,
+  .dangerZone,
+  .joinBlock {
+    display: none !important;
+  }
+
+  .page,
+  .page.hasPlayer {
+    max-width: none;
+    padding: 0;
+    /* 貼底列不在了，讓出來的高度也要收回 */
+    --dock-h: 0rem;
+  }
+
+  /* 編輯提示（「點內容就能改」）與 placeholder 都是螢幕上的引導，紙上是雜訊。 */
+  .hint {
+    display: none;
+  }
+
+  .field::placeholder,
+  .speakerInput::placeholder {
+    color: transparent;
+  }
+
+  /* 說話人那一區是編輯用的（把 A/B/C 改成真名）；改完逐字稿上就是真名了，
+     紙上不必再列一次對照表。:has 是為了連整個 <section> 一起收掉。 */
+  .section:has(.speakers) {
+    display: none;
+  }
+
+  /* 講者名在紙上就是講者名：可按的那條虛線拿掉。 */
+  .turnSpeakerBtn {
+    border-bottom-color: transparent;
+  }
+
+  /* 下拉選單在紙上不是控制項，是一個值——把箭頭與框都拿掉。 */
+  .select,
+  .turnSpeakerSelect {
+    appearance: none;
+    border-color: transparent;
+    background: transparent;
+    padding-left: 0;
+  }
+
+  /* 剛換好的詞在紙上不該有底色：那是「換到哪」的即時回饋，不是文件的一部分。 */
+  .hit {
+    background: transparent !important;
+    animation: none;
+  }
+
+  /* 可編輯欄位在紙上就是內文：hover／focus 的框線一律不留。 */
+  .field {
+    border-color: transparent !important;
+    background: transparent !important;
+  }
+
+  .speakerInput {
+    border-color: transparent !important;
+    background: transparent !important;
+    padding-left: 0;
+  }
+
+  /* 方章與承諾印記是這份文件的權威來源，磚紅一定要印出來（預設會被瀏覽器省掉底色）。 */
+  .seal,
+  .bulletSeal,
+  .cta {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* 紙上點不到 mailto，把信箱直接寫出來——敲門磚要跟著 PDF 一起被轉傳（GLOSSARY.md）。 */
+  .cta::after {
+    content: "（hello@chengshisuo.com）";
+  }
+
+  /* 標題不落單、條目不被切成兩頁 */
+  .sectionHead {
+    break-after: avoid;
+  }
+
+  .row,
+  .turn,
+  .speakerRow,
+  .subsection {
+    break-inside: avoid;
+  }
+
+  /* 逐字稿是佐證不是主體，另起一頁——不然第一頁就被口水淹掉。 */
+  .printBreak {
+    break-before: page;
+  }
+
+  /* 播放狀態是螢幕上的事，紙上不要那層底色。 */
+  .turnActive {
+    background: none;
+  }
+
+  .stampBtn {
+    border-bottom: none;
+  }
+}

@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>成事所｜完整視覺識別手冊</title>
+  <meta name="author" content="成事所">
+  <meta name="description" content="成事所完整視覺識別手冊：用程式幫你成事。">
+  <meta name="keywords" content="成事所,品牌識別,Logo,視覺系統,磚紅,用程式幫你成事">
+  <meta name="generator" content="Kami">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23B65A4A'/%3E%3Ctext x='16' y='24' text-anchor='middle' font-family='Arial,sans-serif' font-size='18' font-weight='600' fill='%23FFFDFC'%3E%E6%88%90%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      --paper: #F8F6F4;
+      --paper-bright: #FFFDFC;
+      --paper-deep: #F0EBE6;
+      --brick: #B65A4A;
+      --brick-dark: #8D4339;
+      --brick-soft: #D5A69A;
+      --ink: #383432;
+      --ink-deep: #241F1D;
+      --muted: #81756D;
+      --muted-light: #A99B92;
+      --line: #E2D9D3;
+      --line-deep: #D6C9C1;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --shadow-whisper: 0 16px 48px rgba(56, 52, 50, .08);
+      --sans: "PingFang TC", "PingFang SC", "Noto Sans TC", "Noto Sans CJK TC", "Microsoft JhengHei", "Helvetica Neue", Arial, sans-serif;
+      --mono: "SF Mono", "JetBrains Mono", Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.65;
+      letter-spacing: .02em;
+    }
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; }
+    .page-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 240px minmax(0, 1fr);
+    }
+    .docnav {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 28px 18px 22px;
+      background: #FAF9F5;
+      border-right: 1px solid var(--line);
+      z-index: 10;
+    }
+    .nav-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0 4px 34px;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink-deep);
+      text-decoration: none;
+    }
+    .nav-brand-mark {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      color: var(--paper-bright);
+      background: var(--brick);
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1;
+    }
+    .nav-collapse, .nav-toggle {
+      border: 1px solid var(--line);
+      color: var(--brick-dark);
+      background: var(--paper);
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .nav-collapse {
+      width: 30px;
+      height: 30px;
+      font-size: 16px;
+      line-height: 1;
+    }
+    .nav-collapse:hover, .nav-toggle:hover { background: var(--paper-deep); }
+    .nav-label {
+      margin: 0 8px 10px;
+      color: var(--muted-light);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .12em;
+    }
+    .nav-list { display: grid; gap: 3px; }
+    .nav-list a {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      min-height: 38px;
+      padding: 6px 8px;
+      border-left: 3px solid transparent;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      line-height: 1.25;
+      transition: background .18s ease, color .18s ease, border-color .18s ease;
+    }
+    .nav-list a:hover, .nav-list a.current {
+      color: var(--brick-dark);
+      background: #F2E7E2;
+      border-left-color: var(--brick);
+    }
+    .nav-num {
+      color: var(--brick);
+      font-family: var(--mono);
+      font-size: 10px;
+    }
+    .nav-foot {
+      margin: 44px 8px 0;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted-light);
+      font-size: 11px;
+      line-height: 1.55;
+    }
+    .mobile-nav { display: none; }
+    .nav-toggle {
+      display: none;
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      z-index: 30;
+      padding: 8px 12px;
+      color: var(--brick-dark);
+      font-size: 13px;
+    }
+    body.nav-hidden .page-shell { grid-template-columns: minmax(0, 1fr); }
+    body.nav-hidden .docnav { display: none; }
+    body.nav-hidden .nav-toggle { display: block; }
+
+    main {
+      min-width: 0;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 56px 96px;
+    }
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 72px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .topline-kicker {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--brick-dark);
+      font-weight: 600;
+      letter-spacing: .1em;
+    }
+    .topline-kicker::before {
+      content: "";
+      width: 20px;
+      height: 3px;
+      border-radius: 99px;
+      background: var(--brick);
+    }
+    .topline-meta { font-family: var(--mono); font-size: 11px; }
+
+    section { scroll-margin-top: 28px; }
+    .hero {
+      min-height: 640px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, .82fr);
+      align-items: center;
+      gap: clamp(48px, 9vw, 128px);
+      padding: 88px 0 112px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 20px;
+      color: var(--brick-dark);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--brick);
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      margin-bottom: 16px;
+      color: var(--ink-deep);
+      font-size: clamp(56px, 8vw, 108px);
+      font-weight: 600;
+      letter-spacing: -.06em;
+      line-height: 1.08;
+    }
+    .hero-tagline {
+      margin-bottom: 22px;
+      color: var(--brick-dark);
+      font-size: clamp(20px, 2.3vw, 30px);
+      font-weight: 600;
+      letter-spacing: -.02em;
+      line-height: 1.35;
+    }
+    .hero-description {
+      max-width: 510px;
+      margin-bottom: 30px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.8;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 9px 17px;
+      border: 1px solid var(--brick);
+      border-radius: 10px;
+      color: var(--paper-bright);
+      background: var(--brick);
+      box-shadow: 0 0 0 1px var(--brick);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .button:hover { transform: translateY(-2px); background: var(--brick-dark); }
+    .button.secondary {
+      color: var(--ink);
+      background: transparent;
+      box-shadow: none;
+      border-color: var(--line-deep);
+    }
+    .button.secondary:hover { background: var(--paper-deep); }
+    .hero-visual {
+      position: relative;
+      min-height: 450px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      background: var(--paper-deep);
+    }
+    .hero-visual::before, .hero-visual::after {
+      content: "";
+      position: absolute;
+      border: 1px solid var(--brick-soft);
+      border-radius: 50%;
+    }
+    .hero-visual::before { width: 360px; height: 360px; }
+    .hero-visual::after { width: 520px; height: 520px; opacity: .55; }
+    .hero-mark-wrap { position: relative; z-index: 1; text-align: center; }
+    .logo-mark {
+      display: grid;
+      place-items: center;
+      width: 184px;
+      height: 184px;
+      border-radius: 48px;
+      color: var(--paper-bright);
+      background: var(--brick);
+      box-shadow: var(--shadow-whisper);
+    }
+    .logo-mark svg { width: 100%; height: 100%; }
+    .logo-mark text { font-family: var(--sans); font-weight: 600; }
+    .hero-wordmark {
+      margin-top: 24px;
+      color: var(--ink-deep);
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: .13em;
+    }
+    .hero-wordmark small {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: .08em;
+    }
+
+    .section {
+      padding: 108px 0 116px;
+      border-top: 1px solid var(--line);
+    }
+    .section-heading {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1fr);
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .section-number {
+      padding-top: 8px;
+      color: var(--brick);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+    }
+    h2 {
+      margin-bottom: 14px;
+      color: var(--ink-deep);
+      font-size: clamp(28px, 3.4vw, 46px);
+      font-weight: 600;
+      letter-spacing: -.045em;
+      line-height: 1.2;
+    }
+    .section-lede {
+      max-width: 700px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.8;
+    }
+    .statement {
+      margin: 0 0 42px;
+      padding: 28px 32px;
+      border-left: 4px solid var(--brick);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      color: var(--ink-deep);
+      background: var(--paper-bright);
+      font-size: clamp(20px, 2.5vw, 32px);
+      font-weight: 600;
+      letter-spacing: -.035em;
+      line-height: 1.45;
+    }
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .principle {
+      min-height: 170px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--paper-bright);
+    }
+    .principle-index {
+      color: var(--brick);
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+    .principle h3 { margin: 24px 0 8px; font-size: 20px; font-weight: 600; }
+    .principle p { margin-bottom: 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
+
+    .logo-system { display: grid; gap: 20px; }
+    .logo-showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .logo-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--paper-bright);
+    }
+    .logo-card-stage {
+      min-height: 300px;
+      display: grid;
+      place-items: center;
+      background: var(--paper-deep);
+    }
+    .logo-card-stage .logo-mark { width: 184px; height: 184px; box-shadow: none; }
+    .logo-card-stage .logo-mark.single text { font-size: 126px; }
+    .logo-card-copy { padding: 22px 24px 25px; }
+    .logo-card-copy h3 { margin: 0 0 6px; font-size: 20px; font-weight: 600; }
+    .logo-card-copy p { margin: 0; color: var(--muted); font-size: 13px; }
+    .lockup-panel {
+      display: grid;
+      grid-template-columns: minmax(180px, .7fr) 1fr;
+      align-items: center;
+      gap: 40px;
+      padding: 32px;
+      border-radius: var(--radius-lg);
+      color: var(--paper-bright);
+      background: var(--ink-deep);
+    }
+    .lockup-panel .logo-mark { width: 136px; height: 136px; border-radius: 36px; box-shadow: none; }
+    .lockup-title { margin: 0 0 6px; font-size: 32px; font-weight: 600; letter-spacing: .1em; }
+    .lockup-tagline { margin: 0; color: #D8CAC2; font-size: 15px; }
+    .lockup-caption { margin-top: 22px; color: #A99B92; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; }
+    .logo-rules {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .rule-card { padding: 24px; border-radius: var(--radius-md); background: var(--paper-bright); }
+    .rule-card h3 { margin: 0 0 18px; font-size: 15px; font-weight: 600; }
+    .rule-list { display: grid; gap: 13px; margin: 0; padding: 0; list-style: none; }
+    .rule-list li { display: grid; grid-template-columns: 24px 1fr; gap: 8px; color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .rule-list li::before { content: "✓"; color: var(--brick); font-weight: 600; }
+    .rule-card.dont .rule-list li::before { content: "×"; color: var(--brick-dark); }
+    .clearspace {
+      position: relative;
+      min-height: 250px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--paper-bright);
+    }
+    .clearspace-frame {
+      position: relative;
+      width: 260px;
+      height: 220px;
+      display: grid;
+      place-items: center;
+      border: 1px dashed var(--brick-soft);
+    }
+    .clearspace-frame::before, .clearspace-frame::after { position: absolute; color: var(--brick); font-family: var(--mono); font-size: 10px; }
+    .clearspace-frame::before { content: "X"; top: 8px; left: 10px; }
+    .clearspace-frame::after { content: "至少 1X"; right: 10px; bottom: 8px; }
+    .clearspace-frame .logo-mark { width: 152px; height: 152px; border-radius: 40px; box-shadow: none; }
+
+    .palette-board { display: grid; grid-template-columns: 1.2fr .8fr; gap: 16px; }
+    .color-primary {
+      min-height: 310px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 28px;
+      border-radius: var(--radius-lg);
+      color: var(--paper-bright);
+      background: var(--brick);
+    }
+    .color-primary h3 { margin: 0; font-size: 28px; font-weight: 600; }
+    .color-primary .hex { color: #F6DCD5; font-family: var(--mono); font-size: 14px; }
+    .color-primary .color-note { max-width: 360px; margin: 0; color: #F8E9E4; font-size: 14px; line-height: 1.65; }
+    .color-stack { display: grid; grid-template-rows: 1fr 1fr; gap: 16px; }
+    .color-block { display: flex; align-items: flex-end; justify-content: space-between; min-height: 147px; padding: 20px; border-radius: var(--radius-lg); }
+    .color-block.light { background: var(--paper-bright); border: 1px solid var(--line); }
+    .color-block.ink { color: var(--paper-bright); background: var(--ink); }
+    .color-block h3 { margin: 0; font-size: 19px; font-weight: 600; }
+    .color-block code { color: inherit; font-family: var(--mono); font-size: 12px; opacity: .76; }
+    .swatches { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+    .swatch {
+      min-height: 126px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 13px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+      cursor: pointer;
+      text-align: left;
+      transition: transform .18s ease;
+    }
+    .swatch:hover { transform: translateY(-3px); }
+    .swatch .swatch-name { font-size: 12px; font-weight: 600; }
+    .swatch .swatch-hex { font-family: var(--mono); font-size: 10px; }
+    .swatch.light-text { color: var(--paper-bright); border-color: transparent; }
+    .swatch-note { margin-top: 12px; color: var(--muted-light); font-size: 12px; }
+    .usage-bar { display: grid; grid-template-columns: 7fr 2fr 1fr; min-height: 54px; overflow: hidden; border-radius: 12px; }
+    .usage-bar div { display: grid; place-items: center; font-family: var(--mono); font-size: 11px; }
+    .usage-bar .u-paper { color: var(--ink); background: var(--paper-deep); }
+    .usage-bar .u-ink { color: var(--paper-bright); background: var(--ink); }
+    .usage-bar .u-brick { color: var(--paper-bright); background: var(--brick); }
+    .usage-caption { margin-top: 10px; color: var(--muted); font-size: 12px; }
+
+    .type-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 16px; }
+    .type-card { padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--paper-bright); }
+    .type-label { margin-bottom: 18px; color: var(--brick); font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: .1em; }
+    .display-sample { margin-bottom: 18px; color: var(--ink-deep); font-size: clamp(38px, 5vw, 66px); font-weight: 600; letter-spacing: -.06em; line-height: 1.12; }
+    .body-sample { max-width: 530px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.85; }
+    .type-rules { display: grid; gap: 0; }
+    .type-rule { display: grid; grid-template-columns: 100px 1fr; gap: 16px; padding: 13px 0; border-bottom: 1px solid var(--line); }
+    .type-rule:last-child { border-bottom: 0; }
+    .type-rule span:first-child { color: var(--muted); font-size: 12px; }
+    .type-rule span:last-child { color: var(--ink); font-size: 14px; font-weight: 600; }
+    .scale { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 16px; }
+    .scale-item { padding: 16px; border-radius: 12px; background: var(--paper-deep); }
+    .scale-item b { display: block; margin-bottom: 6px; color: var(--brick); font-family: var(--mono); font-size: 12px; }
+    .scale-item span { color: var(--muted); font-size: 12px; }
+
+    .system-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .system-card { padding: 28px; border-radius: var(--radius-lg); background: var(--paper-bright); }
+    .system-card h3 { margin: 0 0 20px; color: var(--ink-deep); font-size: 20px; font-weight: 600; }
+    .grid-demo { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
+    .grid-demo span { aspect-ratio: 1; border-radius: 3px; background: var(--brick-soft); }
+    .grid-demo span:nth-child(3n) { background: var(--brick); }
+    .system-note { margin: 14px 0 0; color: var(--muted); font-size: 13px; }
+    .radius-demo { display: flex; align-items: flex-end; gap: 10px; min-height: 105px; }
+    .radius-demo span { display: grid; place-items: center; width: 54px; height: 54px; color: var(--paper-bright); background: var(--brick); font-family: var(--mono); font-size: 10px; }
+    .radius-demo span:nth-child(1) { border-radius: 8px; }
+    .radius-demo span:nth-child(2) { border-radius: 16px; }
+    .radius-demo span:nth-child(3) { border-radius: 24px; }
+    .radius-demo span:nth-child(4) { width: 70px; height: 70px; border-radius: 32px; }
+    .ui-specimen { margin-top: 16px; padding: 22px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--paper-deep); }
+    .ui-window-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; color: var(--muted); font-family: var(--mono); font-size: 10px; }
+    .ui-dots { display: flex; gap: 5px; }
+    .ui-dots i { width: 7px; height: 7px; display: block; border-radius: 50%; background: var(--brick-soft); }
+    .ui-dots i:first-child { background: var(--brick); }
+    .ui-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; padding: 14px 16px; border-radius: 12px; background: var(--paper-bright); }
+    .ui-row:last-child { margin-bottom: 0; }
+    .ui-row strong { color: var(--ink); font-size: 14px; font-weight: 600; }
+    .ui-row small { color: var(--muted); font-size: 12px; }
+    .ui-status { width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%; background: var(--brick); }
+
+    .application-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; }
+    .app-panel { min-height: 260px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--paper-bright); }
+    .app-panel-head { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; border-bottom: 1px solid var(--line); color: var(--muted); font-family: var(--mono); font-size: 10px; letter-spacing: .06em; }
+    .app-panel-body { padding: 24px; }
+    .site-preview { background: var(--paper); }
+    .site-nav { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+    .site-nav strong { color: var(--ink-deep); font-size: 14px; font-weight: 600; }
+    .site-nav span { color: var(--muted); font-size: 11px; }
+    .site-hero { display: grid; grid-template-columns: 1fr 110px; gap: 14px; align-items: center; padding: 24px 18px 28px; }
+    .site-hero h3 { margin: 0 0 7px; color: var(--ink-deep); font-size: 25px; font-weight: 600; letter-spacing: -.04em; line-height: 1.2; }
+    .site-hero p { margin: 0 0 14px; color: var(--muted); font-size: 11px; line-height: 1.6; }
+    .site-button { display: inline-flex; padding: 7px 10px; border-radius: 7px; color: var(--paper-bright); background: var(--brick); font-size: 10px; font-weight: 600; }
+    .site-hero .logo-mark { width: 104px; height: 104px; border-radius: 28px; box-shadow: none; }
+    .social-preview { background: var(--ink-deep); }
+    .social-preview .app-panel-head { color: #A99B92; border-color: #4A3D39; }
+    .social-card { min-height: 210px; display: flex; flex-direction: column; justify-content: space-between; padding: 22px; color: var(--paper-bright); background: var(--brick); }
+    .social-card .social-mark { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 12px; color: var(--brick); background: var(--paper-bright); font-size: 22px; font-weight: 600; }
+    .social-card h3 { max-width: 310px; margin: 24px 0 0; font-size: 24px; font-weight: 600; letter-spacing: -.04em; line-height: 1.3; }
+    .channel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    .channel { padding: 20px; border-radius: var(--radius-lg); background: var(--paper-deep); }
+    .channel h3 { margin: 0 0 16px; font-size: 17px; font-weight: 600; }
+    .line-message { max-width: 270px; padding: 14px; border-radius: 14px 14px 14px 4px; color: var(--ink); background: var(--paper-bright); font-size: 13px; line-height: 1.6; }
+    .line-message b { color: var(--brick-dark); font-weight: 600; }
+    .favicon-row { display: flex; align-items: center; gap: 12px; }
+    .favicon-demo { width: 56px; height: 56px; display: grid; place-items: center; border-radius: 15px; color: var(--paper-bright); background: var(--brick); font-size: 27px; font-weight: 600; }
+    .favicon-row span { color: var(--muted); font-family: var(--mono); font-size: 11px; }
+
+    .do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .do-dont-card { min-height: 300px; padding: 24px; border-radius: var(--radius-lg); background: var(--paper-bright); }
+    .do-dont-card.is-dont { background: #F1E8E4; }
+    .do-dont-card h3 { display: flex; align-items: center; gap: 9px; margin: 0 0 22px; font-size: 18px; font-weight: 600; }
+    .do-dont-card h3 span { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; color: var(--paper-bright); background: var(--brick); font-size: 13px; }
+    .do-dont-card.is-dont h3 span { background: var(--brick-dark); }
+    .mini-logo-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; align-items: center; }
+    .mini-demo { min-height: 150px; display: grid; place-items: center; border-radius: 12px; background: var(--paper-deep); }
+    .mini-demo .logo-mark { width: 84px; height: 84px; border-radius: 23px; box-shadow: none; }
+    .mini-demo .logo-mark text { font-size: 39px; }
+    .mini-demo .logo-mark.single text { font-size: 59px; }
+    .mini-demo.bad .logo-mark { box-shadow: 14px 0 0 var(--brick-soft); }
+    .mini-demo.bad .logo-mark.single { transform: rotate(-8deg); }
+    .do-dont-note { margin: 14px 0 0; color: var(--muted); font-size: 12px; }
+    .checklist { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
+    .check { padding: 18px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--paper-bright); }
+    .check b { display: block; margin-bottom: 5px; color: var(--brick-dark); font-size: 14px; font-weight: 600; }
+    .check span { color: var(--muted); font-size: 12px; line-height: 1.6; }
+
+    footer {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    footer strong { color: var(--ink); font-weight: 600; }
+    footer p { margin: 0; }
+    footer a { color: var(--brick-dark); text-underline-offset: 3px; }
+    .source-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
+    .copy-toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      z-index: 40;
+      transform: translate(-50%, 20px);
+      padding: 10px 14px;
+      border-radius: 9px;
+      color: var(--paper-bright);
+      background: var(--ink-deep);
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    .copy-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    @media (max-width: 1100px) {
+      main { padding-right: 40px; padding-left: 40px; }
+      .hero { gap: 48px; }
+      .principles { grid-template-columns: repeat(2, 1fr); }
+      .swatches { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .page-shell { display: block; }
+      .docnav { position: sticky; width: 100%; height: auto; max-height: none; padding: 14px 18px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .nav-head { margin: 0; }
+      .desktop-nav, .nav-foot, .nav-collapse { display: none; }
+      .mobile-nav { display: block; margin-top: 12px; }
+      .mobile-nav summary { cursor: pointer; color: var(--brick-dark); font-size: 13px; font-weight: 600; }
+      .mobile-nav .nav-list { margin-top: 10px; }
+      .nav-toggle { display: none !important; }
+      body.nav-hidden { display: block; }
+      body.nav-hidden .docnav { display: block; }
+      main { max-width: 100%; padding: 0 24px 70px; }
+      .topline { min-height: 62px; }
+      .hero { min-height: 0; grid-template-columns: 1fr; gap: 42px; padding: 70px 0 86px; }
+      .hero-visual { min-height: 360px; }
+      .section { padding: 78px 0 86px; }
+      .section-heading { grid-template-columns: 70px minmax(0, 1fr); gap: 14px; margin-bottom: 32px; }
+      .palette-board, .type-grid, .system-grid, .application-grid { grid-template-columns: 1fr; }
+      .logo-showcase, .logo-rules, .do-dont { grid-template-columns: 1fr; }
+      .lockup-panel { grid-template-columns: 130px 1fr; gap: 24px; }
+      .channel-grid { grid-template-columns: 1fr; }
+      .checklist { grid-template-columns: 1fr; }
+      footer { flex-direction: column; }
+      .source-links { justify-content: flex-start; }
+    }
+    @media (max-width: 520px) {
+      body { font-size: 15px; }
+      main { padding-right: 18px; padding-left: 18px; }
+      .topline-meta { display: none; }
+      .hero { padding-top: 54px; }
+      h1 { font-size: 62px; }
+      h2 { font-size: 32px; }
+      .hero-visual { min-height: 300px; }
+      .hero-visual::before { width: 260px; height: 260px; }
+      .hero-visual::after { width: 360px; height: 360px; }
+      .logo-mark { width: 150px; height: 150px; border-radius: 40px; }
+      .logo-card-stage .logo-mark { width: 150px; height: 150px; }
+      .principles, .swatches, .scale { grid-template-columns: 1fr 1fr; }
+      .swatch { min-height: 106px; }
+      .lockup-panel { grid-template-columns: 1fr; }
+      .lockup-panel .logo-mark { width: 120px; height: 120px; }
+      .usage-bar { min-height: 68px; }
+      .usage-bar div { font-size: 9px; text-align: center; }
+      .section-heading { grid-template-columns: 1fr; gap: 4px; }
+      .section-number { padding-top: 0; }
+      .statement { padding: 21px 22px; font-size: 22px; }
+      .site-hero { grid-template-columns: 1fr; }
+      .site-hero .logo-mark { width: 84px; height: 84px; }
+    }
+    @media print {
+      .page-shell { display: block; }
+      .docnav, .nav-toggle, .topline { display: none !important; }
+      main { max-width: none; padding: 0; }
+      .hero { min-height: auto; padding: 32px 0 48px; }
+      .section { padding: 48px 0; break-inside: avoid; }
+      .button { color: var(--ink); background: transparent; box-shadow: none; }
+      a { text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <aside class="docnav" id="docnav" aria-label="文件目錄">
+      <div class="nav-head">
+        <a class="nav-brand" href="#overview">
+          <span class="nav-brand-mark">成</span>
+          <span>成事所<br><small>VISUAL SYSTEM</small></span>
+        </a>
+        <button class="nav-collapse" id="nav-collapse" type="button" aria-label="收起目錄">«</button>
+      </div>
+      <div class="desktop-nav">
+        <div class="nav-label">CONTENTS</div>
+        <nav class="nav-list">
+          <a class="current" href="#overview"><span class="nav-num">00</span><span>封面與總覽</span></a>
+          <a href="#strategy"><span class="nav-num">01</span><span>品牌核心</span></a>
+          <a href="#logo"><span class="nav-num">02</span><span>標誌系統</span></a>
+          <a href="#color"><span class="nav-num">03</span><span>色彩系統</span></a>
+          <a href="#type"><span class="nav-num">04</span><span>字體與排版</span></a>
+          <a href="#graphic"><span class="nav-num">05</span><span>圖形與介面</span></a>
+          <a href="#applications"><span class="nav-num">06</span><span>品牌應用</span></a>
+          <a href="#rules"><span class="nav-num">07</span><span>使用規範</span></a>
+        </nav>
+      </div>
+      <details class="mobile-nav">
+        <summary>開啟文件目錄</summary>
+        <nav class="nav-list">
+          <a href="#overview"><span class="nav-num">00</span><span>封面與總覽</span></a>
+          <a href="#strategy"><span class="nav-num">01</span><span>品牌核心</span></a>
+          <a href="#logo"><span class="nav-num">02</span><span>標誌系統</span></a>
+          <a href="#color"><span class="nav-num">03</span><span>色彩系統</span></a>
+          <a href="#type"><span class="nav-num">04</span><span>字體與排版</span></a>
+          <a href="#graphic"><span class="nav-num">05</span><span>圖形與介面</span></a>
+          <a href="#applications"><span class="nav-num">06</span><span>品牌應用</span></a>
+          <a href="#rules"><span class="nav-num">07</span><span>使用規範</span></a>
+        </nav>
+      </details>
+      <div class="nav-foot">
+        <strong>v1.0 / 2026.08</strong><br>
+        一套讓事情更快被看懂、被整理、被完成的視覺系統。
+      </div>
+    </aside>
+
+    <button class="nav-toggle" id="nav-toggle" type="button">☰ 目錄</button>
+
+    <main>
+      <div class="topline">
+        <div class="topline-kicker">BRAND VISUAL IDENTITY</div>
+        <div class="topline-meta">CHENGSHISUO / V1.0 / 2026.08</div>
+      </div>
+
+      <section class="hero" id="overview">
+        <div class="hero-copy">
+          <div class="eyebrow">成事所 / 視覺識別手冊</div>
+          <h1>成事所</h1>
+          <p class="hero-tagline">用程式幫你成事</p>
+          <p class="hero-description">把一件還沒完成的事，變成下一個清楚、可執行的步驟。這份文件定義成事所的 Logo、色彩、字體與應用方式。</p>
+          <div class="hero-actions">
+            <a class="button" href="#logo">查看 Logo 系統</a>
+            <a class="button secondary" href="#applications">查看品牌應用</a>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="成事所主品牌章示意">
+          <div class="hero-mark-wrap">
+            <div class="logo-mark">
+              <svg viewBox="0 0 184 184" role="img" aria-label="成事">
+                <text x="92" y="111" text-anchor="middle" fill="#FFFDFC" font-size="73" letter-spacing="2">成事</text>
+              </svg>
+            </div>
+            <div class="hero-wordmark">成事所<small>用程式幫你成事</small></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="strategy">
+        <div class="section-heading">
+          <div class="section-number">01 / CORE<br>品牌核心</div>
+          <div>
+            <h2>不是展示技術，<br>是把事情往前推。</h2>
+            <p class="section-lede">成事所的視覺語言要像一個可靠的工作夥伴：先把重點講清楚，再把下一步交到你手上。</p>
+          </div>
+        </div>
+        <p class="statement">「工具不搶戲，結果要到位。」</p>
+        <div class="principles">
+          <article class="principle"><span class="principle-index">01</span><h3>清楚</h3><p>第一眼知道這是什麼、現在在哪、接下來能做什麼。</p></article>
+          <article class="principle"><span class="principle-index">02</span><h3>務實</h3><p>少一點概念展示，多一點可以直接拿去用的結果。</p></article>
+          <article class="principle"><span class="principle-index">03</span><h3>可靠</h3><p>同一個品牌在網站、產品與訊息裡都保持同樣的性格。</p></article>
+          <article class="principle"><span class="principle-index">04</span><h3>人味</h3><p>技術藏在後面，前面留下的是好理解、好接近的語氣。</p></article>
+        </div>
+      </section>
+
+      <section class="section" id="logo">
+        <div class="section-heading">
+          <div class="section-number">02 / LOGO<br>標誌系統</div>
+          <div>
+            <h2>讓「成事」<br>直接成為記號。</h2>
+            <p class="section-lede">不加旗子、箭頭或抽象符號。品牌名稱本身就是最短、最有記憶點的圖形。</p>
+          </div>
+        </div>
+        <div class="logo-system">
+          <div class="logo-showcase">
+            <article class="logo-card">
+              <div class="logo-card-stage">
+                <div class="logo-mark"><svg viewBox="0 0 184 184" aria-label="成事"><text x="92" y="111" text-anchor="middle" fill="#FFFDFC" font-size="73" letter-spacing="2">成事</text></svg></div>
+              </div>
+              <div class="logo-card-copy"><h3>A / 成事章</h3><p>主品牌章。適合網站入口、產品封面、品牌物料與第一次介紹品牌的場景。</p></div>
+            </article>
+            <article class="logo-card">
+              <div class="logo-card-stage">
+                <div class="logo-mark single"><svg viewBox="0 0 184 184" aria-label="成"><text x="92" y="130" text-anchor="middle" fill="#FFFDFC" font-size="115">成</text></svg></div>
+              </div>
+              <div class="logo-card-copy"><h3>B / 成章</h3><p>小尺寸 Icon。適合 favicon、App icon、LINE 頭像與瀏覽器頁籤。</p></div>
+            </article>
+          </div>
+          <div class="lockup-panel">
+            <div class="logo-mark"><svg viewBox="0 0 184 184" aria-label="成事"><text x="92" y="111" text-anchor="middle" fill="#FFFDFC" font-size="73" letter-spacing="2">成事</text></svg></div>
+            <div><p class="lockup-title">成事所</p><p class="lockup-tagline">用程式幫你成事</p><p class="lockup-caption">PRIMARY LOCKUP / WORDMARK + BADGE</p></div>
+          </div>
+          <div class="clearspace" aria-label="Logo 安全距離示意">
+            <div class="clearspace-frame"><div class="logo-mark"><svg viewBox="0 0 184 184" aria-label="成事"><text x="92" y="111" text-anchor="middle" fill="#FFFDFC" font-size="73" letter-spacing="2">成事</text></svg></div></div>
+          </div>
+          <div class="logo-rules">
+            <article class="rule-card"><h3>建議使用</h3><ul class="rule-list"><li>維持方章完整圓角與白字留白。</li><li>主品牌第一次出現使用「成事」。</li><li>小於 48px 時改用「成」。</li></ul></article>
+            <article class="rule-card dont"><h3>禁止使用</h3><ul class="rule-list"><li>不加旗子、箭頭、底線或外框。</li><li>不旋轉、不拉伸、不套漸層。</li><li>不使用黑粗體或其他厚重字重。</li></ul></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="color">
+        <div class="section-heading">
+          <div class="section-number">03 / COLOR<br>色彩系統</div>
+          <div>
+            <h2>暖紙白留空間，<br>磚紅留下記憶點。</h2>
+            <p class="section-lede">色彩有溫度，但不喧鬧；有辨識度，但不壓過內容。所有畫面先讓人讀懂，再讓人記住。</p>
+          </div>
+        </div>
+        <div class="palette-board">
+          <div class="color-primary"><div><h3>成事磚紅</h3><div class="hex">#B65A4A</div></div><p class="color-note">主 Logo、主要 CTA、關鍵狀態與少量識別標記。低飽和使它適合長期使用，也能和暖紙白形成穩定對比。</p></div>
+          <div class="color-stack"><div class="color-block light"><h3>暖紙白</h3><code>#F8F6F4</code></div><div class="color-block ink"><h3>墨灰</h3><code>#383432</code></div></div>
+        </div>
+        <div class="swatches" aria-label="品牌色票，點擊色票可複製色碼">
+          <button class="swatch light-text" style="background:#B65A4A" data-copy="#B65A4A"><span class="swatch-name">成事磚紅</span><span class="swatch-hex">#B65A4A</span></button>
+          <button class="swatch" style="background:#F8F6F4" data-copy="#F8F6F4"><span class="swatch-name">暖紙白</span><span class="swatch-hex">#F8F6F4</span></button>
+          <button class="swatch" style="background:#FFFDFC" data-copy="#FFFDFC"><span class="swatch-name">乳白</span><span class="swatch-hex">#FFFDFC</span></button>
+          <button class="swatch light-text" style="background:#383432" data-copy="#383432"><span class="swatch-name">墨灰</span><span class="swatch-hex">#383432</span></button>
+          <button class="swatch light-text" style="background:#81756D" data-copy="#81756D"><span class="swatch-name">灰棕</span><span class="swatch-hex">#81756D</span></button>
+          <button class="swatch" style="background:#D5A69A" data-copy="#D5A69A"><span class="swatch-name">乾燥玫瑰</span><span class="swatch-hex">#D5A69A</span></button>
+        </div>
+        <p class="swatch-note">點擊任一色票可複製 HEX。乾燥玫瑰只作柔和輔色，不與磚紅同時搶主位。</p>
+        <div style="margin-top:38px"><div class="usage-bar"><div class="u-paper">70% / PAPER</div><div class="u-ink">20% / INK</div><div class="u-brick">10% / BRICK</div></div><p class="usage-caption">建議比例：大面積留給暖紙白，墨灰負責閱讀，磚紅只在需要被看見的地方出現。</p></div>
+      </section>
+
+      <section class="section" id="type">
+        <div class="section-heading">
+          <div class="section-number">04 / TYPE<br>字體與排版</div>
+          <div>
+            <h2>字體不表演，<br>讓事情抵達。</h2>
+            <p class="section-lede">成事所需要的是可讀性，不是重量感。標題有份量但不黑粗，內文有呼吸、按鈕有方向。</p>
+          </div>
+        </div>
+        <div class="type-grid">
+          <article class="type-card"><div class="type-label">DISPLAY / PINGFANG TC 600</div><div class="display-sample">成事所<br>用程式幫你成事</div><p class="body-sample">清楚的標題先說結果，內文再補充脈絡。不要讓使用者先學會系統，才有辦法開始做事。</p></article>
+          <article class="type-card"><div class="type-label">TYPE RULES</div><div class="type-rules"><div class="type-rule"><span>主字體</span><span>PingFang TC / Noto Sans TC</span></div><div class="type-rule"><span>標題</span><span>600，不使用黑粗體</span></div><div class="type-rule"><span>內文</span><span>400，行高 1.7–1.85</span></div><div class="type-rule"><span>英文／色碼</span><span>SF Mono / JetBrains Mono</span></div><div class="type-rule"><span>對齊</span><span>左對齊，避免過度置中</span></div></div></article>
+        </div>
+        <div class="scale"><div class="scale-item"><b>08</b><span>micro gap</span></div><div class="scale-item"><b>16</b><span>component</span></div><div class="scale-item"><b>24</b><span>section</span></div><div class="scale-item"><b>32</b><span>feature</span></div><div class="scale-item"><b>48</b><span>hero</span></div></div>
+      </section>
+
+      <section class="section" id="graphic">
+        <div class="section-heading">
+          <div class="section-number">05 / GRAPHIC<br>圖形與介面語言</div>
+          <div>
+            <h2>把「正在整理」<br>變成介面細節。</h2>
+            <p class="section-lede">圓角容器、清楚標籤、單一路徑的主要動作，都是讓使用者少想一點、快做一點的工具。</p>
+          </div>
+        </div>
+        <div class="system-grid">
+          <article class="system-card"><h3>間距基礎 / 4px grid</h3><div class="grid-demo" aria-label="四像素網格示意"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><p class="system-note">以 4px 為基礎，常用間距收斂在 8、16、24、32px。規則越少，整體越像一個系統。</p></article>
+          <article class="system-card"><h3>圓角層級 / radius scale</h3><div class="radius-demo"><span>08</span><span>16</span><span>24</span><span>32</span></div><p class="system-note">小元件 8px、卡片 16px、區塊 24px、主視覺 32px。圓角是秩序，不是裝飾。</p></article>
+        </div>
+        <div class="ui-specimen">
+          <div class="ui-window-bar"><span>PRODUCT SPECIMEN / NEXT ACTION</span><span class="ui-dots"><i></i><i></i><i></i></span></div>
+          <div class="ui-row"><div><strong>會議摘要已完成</strong><br><small>3 個決策 · 5 個待辦 · 1 個承諾</small></div><span class="ui-status" aria-label="完成"></span></div>
+          <div class="ui-row"><div><strong>下一步：指派待辦</strong><br><small>把整理好的結果交給正確的人</small></div><span class="button" style="min-height:32px;padding:5px 11px;font-size:11px">開始處理</span></div>
+        </div>
+      </section>
+
+      <section class="section" id="applications">
+        <div class="section-heading">
+          <div class="section-number">06 / USE<br>品牌應用</div>
+          <div>
+            <h2>不同載體，<br>同一個成事所。</h2>
+            <p class="section-lede">網站、社群、LINE 與產品介面只調整比例，不改變性格：磚紅先建立辨識，暖紙白承接內容，墨灰完成說明。</p>
+          </div>
+        </div>
+        <div class="application-grid">
+          <article class="app-panel site-preview"><div class="app-panel-head"><span>01 / WEBSITE HERO</span><span>1200 × 760</span></div><div class="site-nav"><strong>成事所</strong><span>產品　方法　關於</span></div><div class="site-hero"><div><h3>把事情，<br>交給下一步。</h3><p>用程式把錄音、文字與工作整理成可以直接行動的結果。</p><span class="site-button">開始成事 →</span></div><div class="logo-mark"><svg viewBox="0 0 184 184" aria-label="成事"><text x="92" y="111" text-anchor="middle" fill="#FFFDFC" font-size="73" letter-spacing="2">成事</text></svg></div></div></article>
+          <article class="app-panel social-preview"><div class="app-panel-head"><span>02 / SOCIAL CARD</span><span>1 : 1</span></div><div class="app-panel-body"><div class="social-card"><div class="social-mark">成</div><h3>少一點整理，<br>多一點成事。</h3></div></div></article>
+        </div>
+        <div class="channel-grid">
+          <article class="channel"><h3>LINE / message identity</h3><div class="line-message"><b>成事所</b><br>你的會議已整理完成。<br>下一步要先看決策，還是直接處理待辦？</div></article>
+          <article class="channel"><h3>Favicon / app icon</h3><div class="favicon-row"><div class="favicon-demo">成</div><span>32px 以下只用「成」<br>保留足夠白字留白</span></div></article>
+        </div>
+      </section>
+
+      <section class="section" id="rules">
+        <div class="section-heading">
+          <div class="section-number">07 / RULES<br>使用規範</div>
+          <div>
+            <h2>少一點裝飾，<br>多一點判斷。</h2>
+            <p class="section-lede">一致性不是每一頁長得一樣，而是每一次變化都仍然能被辨認為成事所。</p>
+          </div>
+        </div>
+        <div class="do-dont">
+          <article class="do-dont-card"><h3><span>✓</span>應該這樣做</h3><div class="mini-logo-row"><div class="mini-demo"><div class="logo-mark"><svg viewBox="0 0 184 184"><text x="92" y="111" text-anchor="middle" fill="#FFFDFC" font-size="73" letter-spacing="2">成事</text></svg></div></div><div class="mini-demo"><div class="logo-mark single"><svg viewBox="0 0 184 184"><text x="92" y="130" text-anchor="middle" fill="#FFFDFC" font-size="115">成</text></svg></div></div><div class="mini-demo"><div class="logo-mark single" style="background:#8D4339"><svg viewBox="0 0 184 184"><text x="92" y="130" text-anchor="middle" fill="#FFFDFC" font-size="115">成</text></svg></div></div></div><p class="do-dont-note">保持水平、置中、留白完整；在不同尺寸用對應的字數。</p></article>
+          <article class="do-dont-card is-dont"><h3><span>×</span>不要這樣做</h3><div class="mini-logo-row"><div class="mini-demo bad"><div class="logo-mark"><svg viewBox="0 0 184 184"><text x="92" y="111" text-anchor="middle" fill="#FFFDFC" font-size="73" letter-spacing="2">成事</text></svg></div></div><div class="mini-demo bad"><div class="logo-mark single"><svg viewBox="0 0 184 184"><text x="92" y="130" text-anchor="middle" fill="#FFFDFC" font-size="115">成</text></svg></div></div><div class="mini-demo" style="background:#383432"><div class="logo-mark" style="background:#D5A69A"><svg viewBox="0 0 184 184"><text x="92" y="111" text-anchor="middle" fill="#383432" font-size="73" letter-spacing="2">成事</text></svg></div></div></div><p class="do-dont-note">不旋轉、不加投影、不拉伸、不任意換色，也不使用過重字體。</p></article>
+        </div>
+        <div class="checklist"><div class="check"><b>看得懂</b><span>第一次接觸的人，能在 3 秒內知道品牌與動作。</span></div><div class="check"><b>找得到</b><span>主要按鈕、狀態與下一步，有清楚的層級與對比。</span></div><div class="check"><b>做得到</b><span>視覺不只是好看，而是把人推到下一個可執行結果。</span></div></div>
+      </section>
+
+      <footer>
+        <p><strong>成事所｜完整視覺識別手冊</strong><br>用程式幫你成事 · v1.0 / 2026.08<br><span>成事所官方網站：https://chengshisuo.vercel.app/ · 色感參考：小報童：https://xiaobot.net/home.html · Logo 版本：成事所-暖紙磚紅配色-v14</span></p>
+        <div class="source-links"><a href="https://chengshisuo.vercel.app/" target="_blank" rel="noreferrer">官方網站</a><a href="./成事所-v14-A-暖磚成事.svg">Logo SVG</a><a href="./成事所-暖紙磚紅配色-v14.md">色彩規範</a></div>
+      </footer>
+    </main>
+  </div>
+  <div class="copy-toast" id="copy-toast" role="status">已複製色碼</div>
+  <script>
+    const navLinks = [...document.querySelectorAll('.desktop-nav a[href^="#"]')];
+    const sections = [...document.querySelectorAll('main section[id]')];
+    const linkById = new Map(navLinks.map(link => [link.getAttribute('href').slice(1), link]));
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach(link => link.classList.remove('current'));
+        linkById.get(entry.target.id)?.classList.add('current');
+      });
+    }, { rootMargin: '0px 0px -70% 0px', threshold: 0 });
+    sections.forEach(section => observer.observe(section));
+
+    const collapse = document.getElementById('nav-collapse');
+    const toggle = document.getElementById('nav-toggle');
+    const setNav = hidden => {
+      document.body.classList.toggle('nav-hidden', hidden);
+      localStorage.setItem('chengshisuo-nav-hidden', hidden ? '1' : '0');
+    };
+    collapse.addEventListener('click', () => setNav(true));
+    toggle.addEventListener('click', () => setNav(false));
+    if (localStorage.getItem('chengshisuo-nav-hidden') === '1' && window.innerWidth > 900) setNav(true);
+    document.addEventListener('keydown', event => {
+      if (event.key === '[' && window.innerWidth > 900) setNav(!document.body.classList.contains('nav-hidden'));
+    });
+
+    const toast = document.getElementById('copy-toast');
+    let toastTimer;
+    document.querySelectorAll('[data-copy]').forEach(button => button.addEventListener('click', async () => {
+      const value = button.dataset.copy;
+      try { await navigator.clipboard.writeText(value); } catch (error) {}
+      toast.textContent = `已複製 ${value}`;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 1500);
+    }));
+  </script>
+</body>
+</html>

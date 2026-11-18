@@ -1,0 +1,669 @@
+/*
+ * 首頁落地頁。方向見 .impeccable.md：Vercel Geist 骨架＋成事磚紅口音。
+ * 排版原則跟記錄頁一致：層次靠字級與留白，不包卡片；
+ * 唯一的「表面」給記錄頁縮影——它是證據，不是裝飾。
+ */
+
+.wrap {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg) var(--space-3xl);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.seal {
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  /* 手冊的方章：圓角是邊長的 26%（184 裡的 48）、字佔邊長七成、600 不用黑體。 */
+  border-radius: 26%;
+  background: var(--seal);
+  color: var(--seal-ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  flex: none;
+}
+
+.wordmark {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--text-2);
+}
+
+.topActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* 能按的都要看得出能按（2026-08-16）：文字連結一律加 1px 外框，不靠 hover 才知道。 */
+.topLink {
+  font-size: 0.8125rem;
+  color: var(--text-2);
+  text-decoration: none;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 0.35rem 0.75rem;
+  transition: color 0.12s ease-out, border-color 0.12s ease-out;
+}
+
+.topLink:hover {
+  color: var(--text);
+  border-color: var(--text-2);
+}
+
+/* --- hero：文字左、記錄頁縮影右，故意不置中 --- */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: var(--space-2xl);
+  align-items: center;
+  margin-top: clamp(var(--space-2xl), 8vh, 5rem);
+}
+
+.h1 {
+  margin: 0;
+  font-size: clamp(2rem, 1.2rem + 3.6vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+.sub {
+  margin: var(--space-lg) 0 0;
+  max-width: 30rem;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+
+.ctaRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+}
+
+/* 磚紅只給 CTA——整頁唯一的一顆實色按鈕 */
+.cta {
+  display: inline-block;
+  background: var(--seal);
+  color: var(--seal-ink);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius);
+  transition: opacity 0.12s ease-out;
+}
+
+.cta:hover {
+  opacity: 0.9;
+}
+
+/* 次要 CTA：跟主鈕同高但只有外框——磚紅實色仍然只有一顆 */
+.ctaGhost {
+  display: inline-block;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: none;
+  padding: 0.65rem 1.25rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  transition: border-color 0.12s ease-out;
+}
+
+.ctaGhost:hover {
+  border-color: var(--text-2);
+}
+
+.ctaNote {
+  font-size: 0.8125rem;
+  color: var(--text-2);
+}
+
+/* --- 試用上傳區（issue #19）：先摸到產品，加好友變成留住成果的動作 --- */
+
+.trialCard {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+  width: 100%;
+  max-width: 30rem;
+  padding: var(--space-md) var(--space-lg);
+  /* 虛線是「這裡可以丟東西進來」的通用語——跟頁上其他實線卡一眼分得開 */
+  border: 1.5px dashed var(--border-strong);
+  border-radius: var(--radius);
+  text-align: left;
+}
+
+.trialCardIdle {
+  cursor: pointer;
+  transition: border-color 0.12s ease-out;
+}
+
+.trialCardIdle:hover,
+.trialCardDragging {
+  border-color: var(--seal);
+}
+
+.trialCardDragging {
+  background: var(--seal-weak);
+}
+
+/* 方章的親戚：同一套幾何，但外框版——它是入口不是落款 */
+.trialMark {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 26%;
+  border: 1px solid var(--seal);
+  color: var(--seal-strong);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  flex: none;
+}
+
+.trialText {
+  display: grid;
+  gap: 0.2rem;
+  font-size: 0.875rem;
+}
+
+.trialText strong {
+  font-weight: 600;
+}
+
+.trialText span {
+  font-size: 0.8125rem;
+  color: var(--text-2);
+}
+
+.trialInput {
+  display: none;
+}
+
+.trialError {
+  margin: var(--space-xs) 0 0;
+  max-width: 30rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--danger);
+}
+
+.trialSpinner {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--border);
+  border-top-color: var(--seal);
+  border-radius: 50%;
+  animation: trialSpin 0.9s linear infinite;
+}
+
+@keyframes trialSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trialSpinner {
+    animation-duration: 3s;
+  }
+}
+
+/* --- 桌機 QR（issue #15）：掃了直接進聊天室，手機寬度整塊藏起來 --- */
+
+.qrCard {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+}
+
+/* QR 要黑白分明才掃得動：底色與模組色寫死，不跟深色主題走；
+   內距就是規格要的靜區（quiet zone，至少 4 模組寬） */
+.qrBox {
+  flex: none;
+  background: #fff;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+
+.qrSvg {
+  display: block;
+  width: 104px;
+  height: 104px;
+}
+
+.qrSvg path {
+  fill: #111;
+}
+
+.qrText {
+  display: grid;
+  gap: 0.2rem;
+  font-size: 0.875rem;
+}
+
+.qrText strong {
+  font-weight: 600;
+}
+
+.qrText span {
+  font-size: 0.8125rem;
+  color: var(--text-2);
+  max-width: 16rem;
+}
+
+/* --- 記錄頁縮影：證據，不是裝飾 --- */
+
+.preview {
+  background: var(--bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--ring), 0 2px 2px oklch(0 0 0 / 4%), 0 8px 16px -8px oklch(0 0 0 / 8%);
+  padding: var(--space-lg);
+  font-size: 0.6875rem;
+  line-height: 1.6;
+  user-select: none;
+  pointer-events: none;
+}
+
+.pTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: var(--space-sm) 0 0;
+}
+
+.pMeta {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  color: var(--text-2);
+  margin: 0.2rem 0 0;
+}
+
+.pHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-md);
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.pRule {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.pRow {
+  display: flex;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+  color: var(--text-2);
+}
+
+.pDash {
+  flex: none;
+  width: 0.4rem;
+  height: 1px;
+  margin-top: 0.5rem;
+  background: var(--border-strong);
+}
+
+.pSeal {
+  flex: none;
+  width: 0.3rem;
+  height: 0.3rem;
+  margin-top: 0.35rem;
+  border-radius: 1px;
+  background: var(--seal);
+}
+
+.pStamp {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  color: var(--text-2);
+  padding-top: 0.1rem;
+}
+
+/* --- 三步 --- */
+
+.section {
+  margin-top: var(--space-3xl);
+}
+
+.sectionTitle {
+  margin: 0 0 var(--space-lg);
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-xl);
+}
+
+.stepNum {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-3);
+}
+
+.stepTitle {
+  margin: var(--space-xs) 0 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.stepBody {
+  margin: var(--space-2xs) 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+
+/* --- 隱私 --- */
+
+.privacyList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 34rem;
+}
+
+.privacyList li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding: var(--space-xs) 0;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.privacyList li::before {
+  content: "";
+  flex: none;
+  width: 0.5rem;
+  height: 1px;
+  background: var(--border-strong);
+  transform: translateY(-0.3rem);
+}
+
+/* --- 定價 --- */
+
+/*
+ * 三張方案卡。Geist 骨架：邊界靠 shadow-as-border（--ring）不靠粗框，
+ * 層次先靠排版再靠表面。推薦那張只多一圈磚紅描邊——磚紅稀有才有力量，
+ * 不整張染色、不加左邊條、不套第二層卡片（.impeccable.md 的反面清單）。
+ */
+.plans {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-md);
+  align-items: start;
+}
+
+.plan {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  background: var(--bg);
+  /* 用 --border 不用 --ring：卡片背景跟頁面同色，只靠 10% 的 ring 三張會糊成一片。
+     邊界是這裡唯一的分隔，要看得見（同「可按的都給 1px 邊」那條原則）。 */
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+.planFeatured {
+  /* 用 inset ring 疊上磚紅，卡片不位移——換成 border 會讓這張比別張高 2px */
+  box-shadow: 0 0 0 1px var(--seal);
+}
+
+.planHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.planName {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.planTag {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1;
+  padding: 0.25rem 0.4rem;
+  border-radius: var(--radius-sm);
+  color: var(--seal-ink);
+  background: var(--seal);
+}
+
+.planPrice {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 幣別與週期是說明不是數字，壓小壓淡，讓三張卡的金額對得齊 */
+.planCurrency {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-2);
+  margin-right: 0.125rem;
+}
+
+.planPer {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--text-2);
+}
+
+.planQuota {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.planFeatures {
+  margin: var(--space-2xs) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-2xs);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.planFeatures li {
+  padding-left: 0.875rem;
+  position: relative;
+}
+
+/* 一條短橫線當項目符號，跟隱私那區同一個記號 */
+.planFeatures li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 0.5rem;
+  height: 1px;
+  background: var(--border-strong);
+}
+
+.planAction {
+  margin: auto 0 0;
+  padding-top: var(--space-sm);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--text-3);
+}
+
+/* --- 定價卡按鈕（issue #16）：外框鈕——磚紅實色仍然只給 hero 那一顆 --- */
+
+.planFoot {
+  margin-top: auto;
+  padding-top: var(--space-sm);
+  display: grid;
+  gap: var(--space-2xs);
+}
+
+.planCta {
+  display: block;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: none;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  transition: border-color 0.12s ease-out;
+}
+
+.planCta:hover {
+  border-color: var(--text-2);
+}
+
+.planNote {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--text-3);
+}
+
+.priceNote {
+  margin: var(--space-md) 0 0;
+  font-size: 0.8125rem;
+  color: var(--text-2);
+}
+
+/* --- 頁尾（敲門磚就縮在這一行裡） --- */
+
+.footer {
+  margin-top: var(--space-3xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  font-size: 0.8125rem;
+  color: var(--text-2);
+}
+
+.footBrand,
+.footNote {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+/* 外框是規矩：能按的要看得出能按，不靠 hover 或底線（.impeccable.md 原則 5） */
+.footLink {
+  color: var(--seal-strong);
+  text-decoration: none;
+  border: 1px solid var(--seal);
+  border-radius: var(--radius);
+  padding: 0.3rem 0.7rem;
+  transition: background 0.12s ease-out;
+}
+
+.footLink:hover {
+  background: var(--seal-weak);
+}
+
+/* --- 載入動線：一次到位的進場，不做零碎小動畫 --- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero,
+  .section,
+  .footer {
+    animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .section:nth-of-type(1) {
+    animation-delay: 0.06s;
+  }
+
+  .section:nth-of-type(2) {
+    animation-delay: 0.12s;
+  }
+
+  .section:nth-of-type(3) {
+    animation-delay: 0.18s;
+  }
+
+  .footer {
+    animation-delay: 0.24s;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* --- 手機 --- */
+
+@media (max-width: 720px) {
+  .plans {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  /* 手機上掃自己的螢幕沒有意義，按鈕本來就直達 */
+  .qrCard {
+    display: none;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+}

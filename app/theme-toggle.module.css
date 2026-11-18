@@ -1,0 +1,46 @@
+/* 深淺色切換鈕。外觀對齊 home.module.css 的 .topLink：能按的都要有 1px 外框。 */
+
+.toggle {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  background: none;
+  color: var(--text-2);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: color 0.12s ease-out, border-color 0.12s ease-out;
+}
+
+.toggle:hover {
+  color: var(--text);
+  border-color: var(--text-2);
+}
+
+/*
+ * 兩顆圖示都在 DOM 裡，靠「深色是否生效」挑一顆顯示（selector 邏輯同 globals.css 的
+ * 深色 token）：亮色給月亮（按了變深）、深色給太陽（按了變亮）。
+ */
+.toLight {
+  display: none;
+}
+
+:global(:root[data-theme="dark"]) .toDark {
+  display: none;
+}
+
+:global(:root[data-theme="dark"]) .toLight {
+  display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme="light"])) .toDark {
+    display: none;
+  }
+
+  :global(:root:not([data-theme="light"])) .toLight {
+    display: block;
+  }
+}

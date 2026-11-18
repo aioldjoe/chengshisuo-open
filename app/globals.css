@@ -1,0 +1,244 @@
+/*
+ * 成事所的設計 token。方向見 .impeccable.md：Vercel Geist 的骨架＋成事所的口音。
+ * 色票與方章來自品牌手冊 brand/成事所-完整視覺識別手冊-v15.html（2026-08 定案）：
+ * 成事磚紅 #B65A4A、暖紙白 #F8F6F4、乳白 #FFFDFC、墨灰 #383432、灰棕 #81756D、線 #E2D9D3。
+ * 這裡寫 oklch 是為了深色版好推導，數值就是那幾個 hex 換算來的。
+ *
+ * 混排是照真實語料選的，不是為了洋氣——會議內容重度中英夾雜（onboarding、
+ * Excel export、per seat），Geist 管拉丁字與數字，PingFang／Noto 管中文。
+ * Geist Mono 只給時間戳與檔名這類操作性識別，不當「技術感」的裝飾。
+ *
+ * 中性色全部微微偏暖（chroma 0.003–0.02），與磚紅同一色相家族；
+ * 察覺不到是紅的，但整頁會有共鳴。深色版只換 token，元件的 CSS 不必知道主題。
+ */
+
+:root {
+  color-scheme: light;
+
+  --font-sans: var(--font-geist-sans), "PingFang TC", "Noto Sans TC", "Microsoft JhengHei",
+    system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* 亮度是照 WCAG 反推的：--text-2 要撐 4.5:1（時間戳、提示都是內容不是裝飾），
+     手冊的灰棕 #81756D 在暖紙白上只有 4.2:1，所以壓深一階；
+     --text-3 只給 placeholder 這種會被真內容取代的字，落在 3.5:1 一階。 */
+  --bg: oklch(0.974 0.003 68);
+  --surface: oklch(0.943 0.009 68);
+  --text: oklch(0.328 0.007 49);
+  --text-2: oklch(0.54 0.019 56);
+  --text-3: oklch(0.6 0.02 55);
+  --border: oklch(0.891 0.013 56);
+  --border-strong: oklch(0.844 0.018 54);
+
+  /* 成事磚紅：唯一的品牌色，只給落款方章、承諾印記、CTA。稀有才有力量。
+     --seal 是「填色」（方章、按鈕，白字壓上去 4.6:1）；
+     當內文連結時要用 --seal-strong（手冊的深磚紅 #8D4339，在暖紙白上 6.6:1），
+     磚紅本人當文字只有 4.3:1 不過關。 */
+  --seal: oklch(0.576 0.123 31);
+  --seal-strong: oklch(0.475 0.103 29);
+  --seal-ink: oklch(0.995 0.003 49);
+  --seal-weak: oklch(0.945 0.028 33);
+
+  /* 刪除是唯一的警示色職務，跟品牌磚紅分開拿。 */
+  --danger: oklch(0.5 0.19 25);
+
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  /* 手冊的圓角層級是 8／16／24／32，但這裡沒有卡片，只有按鈕、輸入框、藥丸；
+     取小元件那一階當 --radius，再往兩側各留一格。方章的圓角不走 token，見 .seal。 */
+  --radius-sm: 6px;
+  --radius: 8px;
+  --radius-lg: 16px;
+
+  /* shadow-as-border：Vercel 用一圈 1px 陰影取代實框，邊界更輕。 */
+  --ring: 0 0 0 1px oklch(0.328 0.007 49 / 10%);
+}
+
+/*
+ * 深色 token。預設跟隨系統，但使用者可用切換鈕覆寫（html[data-theme]，存 localStorage，
+ * 開機腳本在 layout.tsx）。兩個 selector 內容必須一模一樣——純 CSS 無法共用區塊，
+ * 改深色數值時兩處都要動。
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    /* 手冊沒定深色版；底色從深墨 #241F1D 往下壓一點，其餘照同一色相家族推。 */
+    --bg: oklch(0.2 0.008 43);
+    --surface: oklch(0.245 0.009 43);
+    --text: oklch(0.955 0.004 60);
+    --text-2: oklch(0.74 0.012 56);
+    --text-3: oklch(0.6 0.012 56);
+    --border: oklch(0.31 0.01 50);
+    --border-strong: oklch(0.41 0.012 50);
+
+    /* 深色底下要提亮才有同樣的存在感，色度同步降一點免得刺眼。 */
+    --seal: oklch(0.7 0.115 31);
+    --seal-strong: oklch(0.78 0.1 32);
+    --seal-ink: oklch(0.2 0.008 43);
+    --seal-weak: oklch(0.3 0.045 32);
+
+    --danger: oklch(0.68 0.17 25);
+
+    --ring: 0 0 0 1px oklch(0.955 0.004 60 / 12%);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: oklch(0.2 0.008 43);
+  --surface: oklch(0.245 0.009 43);
+  --text: oklch(0.955 0.004 60);
+  --text-2: oklch(0.74 0.012 56);
+  --text-3: oklch(0.6 0.012 56);
+  --border: oklch(0.31 0.01 50);
+  --border-strong: oklch(0.41 0.012 50);
+
+  --seal: oklch(0.7 0.115 31);
+  --seal-strong: oklch(0.78 0.1 32);
+  --seal-ink: oklch(0.2 0.008 43);
+  --seal-weak: oklch(0.3 0.045 32);
+
+  --danger: oklch(0.68 0.17 25);
+
+  --ring: 0 0 0 1px oklch(0.955 0.004 60 / 12%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  /* tnum：數字等寬，時間戳與日期才不會跳動 */
+  font-feature-settings: "liga" 1, "tnum" 1;
+  -webkit-font-smoothing: antialiased;
+  /* iOS 點擊不閃灰塊；頁尾不橡皮筋回彈扯動 LIFF 視窗（也擋掉誤觸下拉重整） */
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--seal-weak);
+  color: var(--text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--seal);
+  outline-offset: 2px;
+}
+
+/*
+ * 列印（＝使用者在列印對話框選「儲存成 PDF」）。深色版不印——紙上沒有深色模式，
+ * 而且滿版黑底會吃掉一整支碳粉。照慣例只換 token，元件的 CSS 不必知道。
+ * 數值就是上面淺色版那組，寫死是因為 @media print 裡不能回頭引用被覆寫過的變數。
+ */
+@media print {
+  /*
+   * 中文字型只在列印時自備。理由是環境不對稱：真人的 Mac／Windows 有 PingFang／
+   * 微軟正黑體，字型堆疊裡它們排在前面，這份根本用不到；但產 PDF 的 headless
+   * Chromium（見 lib/pdf.ts）跑在一個「一個 CJK 字型都沒有」的機器上，
+   * 沒有它整份就是方框。宣告在 @media print 裡，一般瀏覽頁面不會下載這 2MB。
+   * 字型名字刻意就叫 Noto Sans TC——堆疊裡本來就有它，不必動 --font-sans。
+   */
+  @font-face {
+    font-family: "Noto Sans TC";
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url("/fonts/noto-sans-tc-400.woff2") format("woff2");
+  }
+
+  /* 只備 400 與 600：500（落款、講者名）由瀏覽器就近取 400，差別在紙上看不出來。 */
+  @font-face {
+    font-family: "Noto Sans TC";
+    font-style: normal;
+    font-weight: 600;
+    font-display: block;
+    src: url("/fonts/noto-sans-tc-600.woff2") format("woff2");
+  }
+
+  /* 選擇器要跟深色那兩塊「一樣特異」才蓋得過去：:root 單獨一個是 (0,1,0)，
+     輸給 :root:not([data-theme="light"]) 的 (0,2,0)——只寫 :root 的話，
+     跟隨系統深色的人印出來會是白字印在白紙上。 */
+  :root,
+  :root:not([data-theme="light"]),
+  :root[data-theme="dark"],
+  :root[data-theme="light"] {
+    color-scheme: light;
+
+    --bg: oklch(1 0 0);
+    --surface: oklch(0.96 0.005 68);
+    --text: oklch(0.28 0.007 49);
+    --text-2: oklch(0.46 0.016 56);
+    --text-3: oklch(0.6 0.02 55);
+    --border: oklch(0.87 0.013 56);
+    --border-strong: oklch(0.8 0.018 54);
+
+    --seal: oklch(0.576 0.123 31);
+    --seal-strong: oklch(0.475 0.103 29);
+    --seal-ink: oklch(0.995 0.003 49);
+    --seal-weak: oklch(0.945 0.028 33);
+
+    --danger: oklch(0.5 0.19 25);
+    --ring: none;
+  }
+
+  /*
+   * 列印的渲染不跑動畫，而記錄頁的進場動畫用 animation-fill-mode: both——
+   * 起始關鍵影格是 opacity: 0，所以不關掉的話整份印出來是白紙。
+   * （2026-08-23 headless Chromium 實測：PDF 只有背景矩形，一個字都沒有。
+   * 真人按 ⌘P 時動畫早就跑完了，所以這個坑只有機器印得到。）
+   */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* 記錄頁的 A－／A＋ 調的是 html 的 font-size（inline style）——
+     那是螢幕上的閱讀偏好，不該決定紙本字級。!important 才蓋得過 inline。 */
+  html {
+    font-size: 100% !important;
+  }
+
+  /* 紙是白的，畫布也要是白的：只清掉 body 的底色不夠——html 的畫布還留著深色版的底，
+     深色模式印出來會是一整頁黑。 */
+  html,
+  body {
+    background: var(--bg);
+  }
+
+  @page {
+    size: A4;
+    margin: 16mm 14mm;
+  }
+}
