@@ -10,6 +10,6 @@ export function loadEnvLocal(): void {
     if (!m) continue;
     const [, key, raw] = m;
     if (process.env[key] !== undefined) continue;
-    process.env[key] = raw.trim().replace(/^["']|["']$/g, "").replace(/\s+#.*$/, "");
+    process.env[key] = raw.trim().replace(/^["']|["']$/g, "").replace(/(^|\s+)#.*$/, "");
   }
 }

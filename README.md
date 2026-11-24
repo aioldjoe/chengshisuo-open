@@ -28,7 +28,14 @@
 
 ## 自己跑起來
 
-需要 Node 和 pnpm。
+分兩層。只想看記錄頁長什麼樣，做第一層就好，幾分鐘、不用申請任何帳號。
+
+### 第一層：在本機看記錄頁（不用任何帳號）
+
+需要：
+
+- Node 22.17 以上，或 24（PDF 匯出用的 `@sparticuz/chromium` 要求 `^22.17.0 || >=24`；實際測過的是 Node 24.22）
+- pnpm（測過的是 11.5）
 
 ```bash
 pnpm install
@@ -38,7 +45,13 @@ pnpm install
 cp .env.example .env.local
 ```
 
-只想在本機看記錄頁長什麼樣，`.env.local` 填一個 `DEV_LINE_USER_ID` 就夠：它讓你跳過 LIFF 登入，一般瀏覽器直接開得起來（只在非正式環境有效）。接著造一場合成的示範會議，會印出記錄頁網址：
+打開 `.env.local`，找到 `DEV_LINE_USER_ID=` 這行，填一個隨便的字串（其他全部留空）：
+
+```
+DEV_LINE_USER_ID=U-dev-local
+```
+
+它讓你跳過 LINE 登入，一般瀏覽器直接開得起來，只在非正式環境有效。接著造一場合成的示範會議，會印出記錄頁網址：
 
 ```bash
 pnpm seed
@@ -48,7 +61,23 @@ pnpm seed
 pnpm dev
 ```
 
-要接上真的 LINE 官方帳號、真的轉寫錄音，照兩支互動精靈走：
+打開 `pnpm seed` 印出來的那條 `http://localhost:3000/m/…`，就是一份可以編輯的記錄頁。首頁 <http://localhost:3000> 和示範頁 <http://localhost:3000/demo> 也開得起來。
+
+這一層看得到、改得到記錄頁；**不能**收 LINE 訊息、不能轉寫錄音、不能付費。會議資料落在本機的 `.data/`，刪掉資料夾就清乾淨。
+
+想順便試 Word 匯出，`.env.local` 再多填一行隨便的字串（匯出網址的簽章金鑰是從它推出來的，沒填按匯出會回 500）：
+
+```
+LINE_CHANNEL_SECRET=local-dev-only
+```
+
+PDF 匯出在本機要借系統的 Chrome，而且是付費檔功能，第一層先不用管。
+
+### 第二層：接上真的 LINE 官方帳號，自己架一套
+
+要申請 LINE、Vercel、Turso、Cloudflare R2、ElevenLabs、Gemini 六個帳號（要收費再加 Stripe）。需要哪些帳號、各家免費額度、照什麼順序設、每個環境變數是什麼，都寫在 **[SETUP.md](./SETUP.md)**。
+
+裡面會用到兩支互動精靈，它們只會開網頁、問你值、寫進 `.env.local`，不會替你建帳號：
 
 ```bash
 bash scripts/setup-line.sh
@@ -58,7 +87,7 @@ bash scripts/setup-line.sh
 bash scripts/setup-deploy.sh
 ```
 
-第一支帶你建 LINE provider、兩個 channel 和 LIFF；第二支帶你填 Stripe、R2、webhook 網址這些只有人能做的設定。每個 key 的用途寫在 [.env.example](./.env.example)。
+第一支帶你建 LINE provider、兩個 channel 和 LIFF；第二支要等站部署好、`.env.local` 填了 `APP_BASE_URL` 才能跑，帶你填 webhook 網址、Stripe、R2 這些只有人能做的設定。
 
 ## 其他指令
 

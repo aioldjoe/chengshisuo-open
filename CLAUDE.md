@@ -36,6 +36,8 @@ pnpm dev / pnpm test / pnpm typecheck / pnpm build / pnpm metrics
 
 本機看記錄頁：`pnpm seed` 造一場示範會議並印出網址。設了 `DEV_LINE_USER_ID` 就跳過 LIFF，一般瀏覽器直接開得起來（前後端都卡 `NODE_ENV`，正式環境不會開後門）。
 
+> 給自己架的人：下面三段（已部署、上線回填、未做）記的是**線上版 chengshisuo.com 當時的狀態**，不是你這份 clone 的狀態。你的站還沒部署、env 也還沒推；照 [SETUP.md](./SETUP.md) 做。
+
 已部署：**https://chengshisuo.com**（網域 2026-08-16 於 Cloudflare 購入、DNS 也在 Cloudflare；Vercel 專案 `chengshisuo`，接 GitHub `main` 自動部署，`chengshisuo.vercel.app` 仍是備用網址；production env 已從 `.env.local` 推上去，`DEV_LINE_USER_ID` 刻意沒推）。網域相關的 URL 只有三處：Vercel `APP_BASE_URL`、LINE webhook URL、LIFF endpoint URL——換網域就是改這三個。本機驗 build 用 `pnpm build:check`（不會蓋掉 dev 的 `.next`）。
 
 上線回填（只有人能做，跑 `bash scripts/setup-deploy.sh` 一步步來）：**Stripe 四個值**（兩個 price、secret key、webhook secret；缺任何一個付費牆發不出付款連結，webhook 事件沒勾齊則是收得到錢但權益不開通）、**LIFF 的 `chat_message.write` 權限**（LINE Developers → LIFF → Scopes；沒開的話記錄頁的「轉傳到 LINE」按下去只會叫你改用複製，`liff.isApiAvailable('shareTargetPicker')` 回 false 而不是丟錯）、GEMINI_API_KEY（本機與正式都還空著——沒它會轉寫成功但抽不出重點）、XAI_API_KEY（可選，比較用）、LINE webhook URL、LIFF endpoint URL、端對端試一場。

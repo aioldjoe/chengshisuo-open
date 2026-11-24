@@ -185,7 +185,15 @@ finish() {
 # ──────────────────────────────────────────────────────────────────────────
 
 ENV_FILE="$(cd "$(dirname "$0")/.." && pwd)/.env.local"
-BASE_URL="${APP_BASE_URL:-https://chengshisuo.com}"
+# 網域一定要是你自己的:先看環境變數,再看 .env.local。兩邊都沒有就停——
+# 預設成線上版的網域,會帶人把自己的 LINE webhook 指到別人的伺服器。
+BASE_URL="${APP_BASE_URL:-$(_existing APP_BASE_URL || true)}"
+BASE_URL="${BASE_URL%/}"
+if [[ -z "$BASE_URL" ]]; then
+  warn "還不知道你的站在哪個網址。先部署到 Vercel,把網址填進 .env.local 的 APP_BASE_URL"
+  warn "(例如 APP_BASE_URL=https://你的專案.vercel.app),再重跑這支。步驟見 SETUP.md。"
+  exit 1
+fi
 TOTAL_STAGES=9
 
 banner "成事所 · 上線回填精靈"

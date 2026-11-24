@@ -9,6 +9,6 @@ export function loadEnvLocal(): void {
     const m = /^\s*([A-Z0-9_]+)\s*=\s*(.*)$/.exec(line);
     if (!m) continue;
     if (process.env[m[1]] !== undefined) continue;
-    process.env[m[1]] = m[2].trim().replace(/^["']|["']$/g, "").replace(/\s+#.*$/, "");
+    process.env[m[1]] = m[2].trim().replace(/^["']|["']$/g, "").replace(/(^|\s+)#.*$/, "");
   }
 }
