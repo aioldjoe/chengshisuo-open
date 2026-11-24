@@ -262,7 +262,7 @@ stage "建立 LIFF app"
 step "剛才的 LINE Login channel → LIFF 分頁 → Add。"
 step "LIFF app name：成事所記錄頁"
 step "Size：Full"
-step "Endpoint URL：先填佔位 https://chengshisuo.com/liff （部署後改成真的）"
+step "Endpoint URL：先填佔位 https://example.com （部署後 setup-deploy.sh 會帶你改成自己的網域）"
 step "Scopes：勾 openid 與 profile。"
 step "建好後複製 LIFF ID（形如 1234567890-abcdefgh）。"
 ask NEXT_PUBLIC_LIFF_ID "貼上 LIFF ID："
@@ -281,4 +281,4 @@ if ! confirm "兩個 channel 都在「成事所」provider 底下？"; then
 fi
 
 finish
-note "下一步：pnpm 專案骨架 + webhook 部署到 Vercel，然後回 console 補 Webhook URL 與 LIFF Endpoint。"
+note "下一步：照 SETUP.md 部署到 Vercel，再跑 scripts/setup-deploy.sh 補 Webhook URL 與 LIFF Endpoint。"
